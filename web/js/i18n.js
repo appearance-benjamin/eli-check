@@ -2,7 +2,7 @@
 
 const UI = {
   en: {
-    title: "Eli Check — see what you're eligible for",
+    title: "See what you're eligible for",
     heroEyebrow: "For students in Maastricht — and everyone in the Netherlands",
     heroTitleA: "Let your finances ",
     heroTitleB: "bloom.",
@@ -60,7 +60,7 @@ const UI = {
     upTo: "up to",
     worth: "worth {amount} / month",
     helpTitle: "Free help in Maastricht",
-    disclaimer: "<strong>This is an estimate, not a decision.</strong> Eli Check uses simplified versions of the official 2026 rules. Only the Belastingdienst (Dienst Toeslagen), DUO, SVB and your municipality can decide what you actually receive. Always verify your situation on their website or with an advisor before applying — and report changes in income on time to avoid paying money back.",
+    disclaimer: "<strong>This is an estimate, not a decision.</strong> This tool uses simplified versions of the official 2026 rules. Only the Belastingdienst (Dienst Toeslagen), DUO, SVB and your municipality can decide what you actually receive. Always verify your situation on their website or with an advisor before applying — and report changes in income on time to avoid paying money back.",
     changeAnswers: "Change answers",
     startOver: "Start over",
     print: "Save as PDF",
@@ -74,11 +74,11 @@ const UI = {
     errorText: "The calculation service isn't reachable. Please check your connection and try again.",
     tryAgain: "Try again",
     sourceCode: "Source code",
-    footer: "Eli Check is an independent, non-commercial tool built on OpenFisca. It is not affiliated with the Dutch government. Results are estimates — always verify with the official agency.",
+    footer: "An independent, non-commercial tool built on OpenFisca, not affiliated with the Dutch government. Results are estimates — always verify with the official agency.",
     sections: { about: "About you", study: "Your studies", home: "Your home", household: "Household", money: "Money" },
   },
   nl: {
-    title: "Eli Check — zie waar je recht op hebt",
+    title: "Zie waar je recht op hebt",
     heroEyebrow: "Voor studenten in Maastricht — en iedereen in Nederland",
     heroTitleA: "Laat je financiën ",
     heroTitleB: "bloeien.",
@@ -136,7 +136,7 @@ const UI = {
     upTo: "tot",
     worth: "t.w.v. {amount} / maand",
     helpTitle: "Gratis hulp in Maastricht",
-    disclaimer: "<strong>Dit is een schatting, geen besluit.</strong> Eli Check gebruikt vereenvoudigde versies van de officiële regels van 2026. Alleen de Belastingdienst (Dienst Toeslagen), DUO, SVB en je gemeente beslissen wat je echt krijgt. Controleer je situatie altijd op hun website of bij een adviseur voordat je aanvraagt — en geef inkomenswijzigingen op tijd door om terugbetalen te voorkomen.",
+    disclaimer: "<strong>Dit is een schatting, geen besluit.</strong> Deze tool gebruikt vereenvoudigde versies van de officiële regels van 2026. Alleen de Belastingdienst (Dienst Toeslagen), DUO, SVB en je gemeente beslissen wat je echt krijgt. Controleer je situatie altijd op hun website of bij een adviseur voordat je aanvraagt — en geef inkomenswijzigingen op tijd door om terugbetalen te voorkomen.",
     changeAnswers: "Antwoorden wijzigen",
     startOver: "Opnieuw beginnen",
     print: "Opslaan als PDF",
@@ -150,7 +150,7 @@ const UI = {
     errorText: "De rekenservice is niet bereikbaar. Controleer je verbinding en probeer het opnieuw.",
     tryAgain: "Probeer opnieuw",
     sourceCode: "Broncode",
-    footer: "Eli Check is een onafhankelijke, niet-commerciële tool gebouwd op OpenFisca, niet verbonden aan de Nederlandse overheid. Uitkomsten zijn schattingen — controleer altijd bij de officiële instantie.",
+    footer: "Een onafhankelijke, niet-commerciële tool gebouwd op OpenFisca, niet verbonden aan de Nederlandse overheid. Uitkomsten zijn schattingen — controleer altijd bij de officiële instantie.",
     sections: { about: "Over jou", study: "Je studie", home: "Je woning", household: "Huishouden", money: "Geld" },
   },
 };

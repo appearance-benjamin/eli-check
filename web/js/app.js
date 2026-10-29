@@ -3,6 +3,7 @@ import { t, L, getLang, setLang, money, number } from "./i18n.js";
 import { SCHEMES, STATIC_TIPS, HELP, CAUSE, CONDITION_TEXT, conditionPrefix } from "./benefits.js";
 import { calculate } from "./api.js";
 import { icon, chevron, check, external } from "./icons.js";
+import { mountGradientWave } from "./gradient-wave.js";
 
 const app = document.getElementById("app");
 const progress = document.querySelector(".progress");
@@ -166,8 +167,9 @@ function renderHome() {
   mount(`
     <div class="home">
       <section class="hero">
+        <div class="hero-wave"></div>
         <p class="eyebrow">${t("heroEyebrow")}</p>
-        <h1>${t("heroTitleA")}<span class="bloom-text">${t("heroTitleB")}</span></h1>
+        <h1>${t("heroTitleA")}<span class="hero-accent">${t("heroTitleB")}</span></h1>
         <p class="lead">${t("heroLead")}</p>
         <div class="hero-actions">
           <button type="button" class="btn btn-primary btn-large" data-action="start">${t("getStarted")}</button>
@@ -206,6 +208,12 @@ function renderHome() {
         </ol>
       </section>
     </div>`);
+
+  // Colours from the old logo: violet base with pink, orange and lilac waves.
+  mountGradientWave(app.querySelector(".hero-wave"), {
+    colors: ["#6d28d9", "#ff5f8f", "#ff9f45", "#a78bfa"],
+    startTime: 4000,
+  });
 }
 
 // ---------- questions ----------
@@ -640,6 +648,20 @@ async function renderResults() {
 }
 
 // ---------- events ----------
+
+// Home cards: a soft light follows the mouse and the card leans slightly towards it.
+app.addEventListener("pointermove", (e) => {
+  const card = e.target.closest(".path");
+  if (!card || e.pointerType !== "mouse") return;
+  const r = card.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width;
+  const y = (e.clientY - r.top) / r.height;
+  card.style.setProperty("--mx", `${x * 100}%`);
+  card.style.setProperty("--my", `${y * 100}%`);
+  if (reducedMotion) return;
+  card.style.setProperty("--rx", `${(0.5 - y) * 6}deg`);
+  card.style.setProperty("--ry", `${(x - 0.5) * 6}deg`);
+});
 
 app.addEventListener("click", (e) => {
   const el = e.target.closest("[data-action]");

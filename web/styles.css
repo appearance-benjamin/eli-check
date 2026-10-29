@@ -111,19 +111,8 @@ button { font: inherit; color: inherit; }
   padding: 0 22px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  font-size: 19px;
-  color: var(--text);
-  letter-spacing: -0.02em;
-}
-.brand:hover { text-decoration: none; }
 
 .topbar-actions { display: flex; align-items: center; gap: 10px; }
 
@@ -222,7 +211,20 @@ button { font: inherit; color: inherit; }
 
 .home { max-width: 1024px; margin: 0 auto; padding: 0 22px; }
 
-.hero { text-align: center; padding: clamp(56px, 11vh, 120px) 0 40px; }
+/* The hero is a panel with the animated gradient (js/gradient-wave.js) behind white text;
+   the CSS gradient shows while it loads and where WebGL isn't available. */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: 16px;
+  padding: clamp(64px, 12vh, 128px) 28px clamp(56px, 9vh, 96px);
+  border-radius: 32px;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(120deg, #6d28d9, #ff5f8f 55%, #ff9f45);
+}
+.hero-wave { position: absolute; inset: 0; z-index: -1; }
 .eyebrow {
   font-size: 15px;
   font-weight: 600;
@@ -230,28 +232,28 @@ button { font: inherit; color: inherit; }
   letter-spacing: 0;
   margin-bottom: 14px;
 }
+.hero .eyebrow { color: rgba(255, 255, 255, 0.86); }
 .hero h1 {
   font-size: clamp(44px, 8vw, 84px);
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.04;
-}
-.bloom-text {
-  background: var(--bloom);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  text-shadow: 0 2px 30px rgba(60, 10, 90, 0.2);
 }
 .hero .lead {
   max-width: 640px;
   margin: 22px auto 0;
   font-size: clamp(19px, 2.4vw, 24px);
   line-height: 1.38;
-  color: var(--text-2);
+  color: rgba(255, 255, 255, 0.94);
   letter-spacing: -0.015em;
+  text-shadow: 0 1px 16px rgba(60, 10, 90, 0.18);
 }
 .hero-actions { margin-top: 34px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-.hero-meta { margin-top: 18px; font-size: 14px; color: var(--text-3); }
+.hero .btn-primary { background: #fff; color: #1d1d1f; }
+.hero .btn-primary:hover { background: rgba(255, 255, 255, 0.88); }
+.hero .btn-link { color: #fff; }
+.hero-meta { margin-top: 18px; font-size: 14px; color: rgba(255, 255, 255, 0.8); }
 
 .paths {
   display: grid;
@@ -276,14 +278,33 @@ button { font: inherit; color: inherit; }
   overflow: hidden;
   transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
 }
-.path:hover { transform: translateY(-3px) scale(1.005); }
+/* app.js sets --mx/--my (pointer position) and --rx/--ry (tilt) while the mouse is over a card. */
+.path:hover { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-3px); }
+.path:active { transform: scale(0.99); }
+.path::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), var(--glow), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.path:hover::after { opacity: 1; }
+.path-student { --glow: rgba(255, 95, 143, 0.14); }
+.path-everyone { --glow: rgba(139, 92, 246, 0.16); }
 .path .path-icon {
   width: 44px; height: 44px;
   border-radius: 12px;
   display: grid; place-items: center;
   color: #fff;
   margin-bottom: 8px;
+  transition: transform 0.4s var(--ease);
 }
+.path:hover .path-icon { transform: scale(1.08) rotate(-6deg); }
+.path .path-cta .chev { transition: transform 0.25s var(--ease); }
+.path:hover .path-cta .chev { transform: translateX(4px); }
 .path .path-icon svg { width: 24px; height: 24px; }
 .path-student .path-icon { background: linear-gradient(135deg, #ff5f8f, #ff9f45); }
 .path-everyone .path-icon { background: linear-gradient(135deg, #5b8cff, #8b5cf6); }
@@ -303,7 +324,8 @@ button { font: inherit; color: inherit; }
   gap: 32px;
   padding: 88px 0 40px;
 }
-.feature svg { width: 28px; height: 28px; color: var(--accent); margin-bottom: 12px; }
+.feature svg { width: 28px; height: 28px; color: var(--accent); margin-bottom: 12px; transition: transform 0.35s var(--ease); }
+.feature:hover svg { transform: translateY(-3px) rotate(-8deg); }
 .feature h3 { font-size: 19px; letter-spacing: -0.015em; margin-bottom: 6px; }
 .feature p { color: var(--text-2); font-size: 16px; }
 
@@ -327,7 +349,9 @@ button { font: inherit; color: inherit; }
   background: var(--text); color: var(--bg);
   font-weight: 600; font-size: 15px;
   margin-bottom: 14px;
+  transition: transform 0.3s var(--ease);
 }
+.steps li:hover::before { transform: scale(1.12); }
 .steps li strong { display: block; font-size: 19px; margin-bottom: 4px; letter-spacing: -0.015em; }
 .steps li span { color: var(--text-2); font-size: 16px; }
 
@@ -748,6 +772,7 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
   .features { grid-template-columns: 1fr; gap: 26px; padding-top: 64px; }
   .steps { padding: 36px 24px; }
   .steps ol { grid-template-columns: 1fr; }
+  .hero { border-radius: 24px; padding: 56px 20px 48px; }
   .path { min-height: 0; padding: 28px 24px; }
   .field { height: 68px; padding: 0 18px; }
   .field input { font-size: 28px; }
