@@ -1,0 +1,124 @@
+description: Inkomstenbelasting box 1 for people below AOW age (tax plus national insurance premiums)
+metadata:
+  reference:
+    - title: Belastingdienst — Tarieven en heffingskortingen (voorlopige aanslag 2026)
+      href: https://www.belastingdienst.nl/wps/wcm/connect/nl/voorlopige-aanslag/content/voorlopige-aanslag-tarieven-en-heffingskortingen
+    - title: Belastingdienst — Tabel arbeidskorting 2025
+      href: https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/inkomstenbelasting/heffingskortingen_boxen_tarieven/heffingskortingen/arbeidskorting/tabel-arbeidskorting-2025
+box1:
+  description: Box 1
+  tarief:
+    description: Combined tax and premium rates in box 1
+    metadata:
+      type: marginal_rate
+      threshold_unit: currency-EUR
+      rate_unit: /1
+    brackets:
+      - threshold:
+          2025-01-01:
+            value: 0
+        rate:
+          2025-01-01:
+            value: 0.3582
+          2026-01-01:
+            value: 0.3575
+      - threshold:
+          2025-01-01:
+            value: 38441
+          2026-01-01:
+            value: 38883
+        rate:
+          2025-01-01:
+            value: 0.3748
+          2026-01-01:
+            value: 0.3756
+      - threshold:
+          2025-01-01:
+            value: 76817
+          2026-01-01:
+            value: 78426
+        rate:
+          2025-01-01:
+            value: 0.4950
+algemene_heffingskorting:
+  description: General tax credit, phased out above the afbouwgrens
+  maximum:
+    description: Maximum per year
+    metadata:
+      unit: currency-EUR
+    values:
+      2025-01-01:
+        value: 3068
+      2026-01-01:
+        value: 3115
+  afbouwgrens:
+    description: Income above which the credit is reduced
+    metadata:
+      unit: currency-EUR
+    values:
+      2025-01-01:
+        value: 28406
+      2026-01-01:
+        value: 29736
+  afbouwpercentage:
+    description: Reduction per euro of income above the afbouwgrens
+    metadata:
+      unit: /1
+    values:
+      2025-01-01:
+        value: 0.06337
+      2026-01-01:
+        value: 0.06398
+arbeidskorting:
+  description: Labour tax credit as a function of income from work (marginal rates; the last band reduces it to 0)
+  metadata:
+    type: marginal_rate
+    threshold_unit: currency-EUR
+    rate_unit: /1
+  brackets:
+    - threshold:
+        2025-01-01:
+          value: 0
+      rate:
+        2025-01-01:
+          value: 0.08053
+        2026-01-01:
+          value: 0.08324
+    - threshold:
+        2025-01-01:
+          value: 12169
+        2026-01-01:
+          value: 11965
+      rate:
+        2025-01-01:
+          value: 0.30030
+        2026-01-01:
+          value: 0.31009
+    - threshold:
+        2025-01-01:
+          value: 26288
+        2026-01-01:
+          value: 25845
+      rate:
+        2025-01-01:
+          value: 0.02258
+        2026-01-01:
+          value: 0.01950
+    - threshold:
+        2025-01-01:
+          value: 43071
+        2026-01-01:
+          value: 45592
+      rate:
+        2025-01-01:
+          value: -0.06510
+        2026-01-01:
+          value: -0.06510
+    - threshold:
+        2025-01-01:
+          value: 129078
+        2026-01-01:
+          value: 132920
+      rate:
+        2025-01-01:
+          value: 0

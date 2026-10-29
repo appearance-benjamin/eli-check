@@ -1,0 +1,88 @@
+description: Algemene bijstand (Participatiewet) — net monthly norms including 5% holiday allowance
+metadata:
+  reference:
+    - title: Participatiewet art. 20-21 (1 July 2026)
+      href: https://wetten.overheid.nl/BWBR0015703/2026-07-01
+    - title: Normenbrief 1 januari 2026
+      href: https://www.rijksoverheid.nl/documenten/2025/12/04/normenbrief-1-januari-2026-informatie-voor-gemeenten
+normen:
+  description: Monthly norms without kostendelende medebewoners
+  alleenstaand_21_plus:
+    description: Single (or single parent), 21 to AOW age
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 1401.50
+      2026-07-01:
+        value: 1419.46
+  paar_21_plus:
+    description: Couple, both 21 to AOW age
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 2002.13
+      2026-07-01:
+        value: 2027.79
+  alleenstaand_18_20:
+    description: Single (or single parent) aged 18-20
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 345.99
+      2026-07-01:
+        value: 350.42
+  paar_18_20:
+    description: Couple both 18-20, no children
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 691.98
+      2026-07-01:
+        value: 700.84
+  paar_18_20_met_kinderen:
+    description: Couple both 18-20, with children
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 1092.41
+      2026-07-01:
+        value: 1106.40
+  paar_gemengd:
+    description: Couple, one 18-20 and one 21+, no children
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 1347.06
+      2026-07-01:
+        value: 1364.32
+  paar_gemengd_met_kinderen:
+    description: Couple, one 18-20 and one 21+, with children
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 1747.49
+      2026-07-01:
+        value: 1769.88
+vermogensgrens:
+  description: Asset limit (Participatiewet art. 34 lid 3)
+  alleenstaand:
+    description: Single
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 8000
+  gezin:
+    description: Single parent or couple
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 16000

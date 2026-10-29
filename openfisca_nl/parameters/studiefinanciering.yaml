@@ -1,0 +1,291 @@
+description: Studiefinanciering (Wet studiefinanciering 2000) and tegemoetkoming scholieren (Wtos)
+metadata:
+  reference:
+    - title: DUO — Bedragen studiefinanciering
+      href: https://duo.nl/particulier/studiefinanciering/bedragen.jsp
+    - title: Wsf 2000 art. 3.18 (normbedragen per 1 januari 2026)
+      href: https://wetten.overheid.nl/BWBR0011453/2026-08-01/0/Hoofdstuk3/Paragraaf3.5/Artikel3.18
+    - title: DUO — Berekening aanvullende beurs hbo/universiteit 2026
+      href: https://duo.nl/images/folder-berekening-aanvullende-beurs-hbo-universiteit-2026.pdf
+    - title: DUO — Berekening aanvullende beurs mbo 2026
+      href: https://duo.nl/images/folder-berekening-aanvullende-beurs-mbo-2026.pdf
+maximumleeftijd:
+  description: Studiefinanciering must start before this age (Wsf art. 2.3)
+  metadata:
+    unit: year
+  values:
+    2025-01-01:
+      value: 30
+eer_verblijfsjaren:
+  description: EU/EEA/Swiss citizens are treated as Dutch after this many years of uninterrupted residence
+  metadata:
+    unit: year
+    reference:
+      - title: DUO — Voorwaarden voor burgers van de EU, EER, Zwitserland of VK
+        href: https://duo.nl/particulier/studiefinanciering-burgers-eu-eer-zwitserland-of-vk/voorwaarden.jsp
+  values:
+    2025-01-01:
+      value: 5
+migrerend_werknemer:
+  description: DUO presumption of EU migrant-worker status (Beleidsregel BWBR0049680, from 1 September 2023)
+  metadata:
+    reference:
+      - title: Beleidsregel migrerend werknemerschap en studiefinanciering
+        href: https://wetten.overheid.nl/BWBR0049680/2024-05-09
+      - title: CRvB 14-04-2023, ECLI:NL:CRVB:2023:700 (56 hours was too strict)
+        href: https://uitspraken.rechtspraak.nl/details?id=ECLI:NL:CRVB:2023:700
+  minimum_uren_per_maand:
+    description: Average hours of work per month
+    metadata:
+      unit: hour
+    values:
+      2023-09-01:
+        value: 32
+  minimum_uren_zes_maanden:
+    description: Alternative — more than this many hours per month, for at least 6 months
+    metadata:
+      unit: hour
+    values:
+      2023-09-01:
+        value: 24
+  minimum_netto_maandinkomen:
+    description: Alternative — average net earnings per month of at least 50% of the bijstandsnorm
+    metadata:
+      reference:
+        - title: DUO — Voorwaarden EU-studenten (50% bijstandsnorm 2026)
+          href: https://duo.nl/particulier/studiefinanciering-burgers-eu-eer-zwitserland-of-vk/voorwaarden.jsp
+    vanaf_21:
+      description: Aged 21 or older
+      metadata:
+        unit: currency-EUR
+      values:
+        2026-01-01:
+          value: 700.75
+    onder_21:
+      description: Younger than 21
+      metadata:
+        unit: currency-EUR
+      values:
+        2026-01-01:
+          value: 173
+studentenreisproduct_waarde:
+  description: Value of the studentenreisproduct (free/discounted public transport) per month
+  metadata:
+    unit: currency-EUR
+    reference:
+      - title: DUO — Studentenreisproduct
+        href: https://duo.nl/particulier/studiefinanciering/ov.jsp
+  values:
+    2025-01-01:
+      value: 109.04
+    2026-01-01:
+      value: 110.95
+    2027-01-01:
+      value: 112.15
+ho:
+  description: Higher education (hbo, wo)
+  basisbeurs:
+    description: Basisbeurs per month
+    thuiswonend:
+      description: Living with parents
+      metadata:
+        unit: currency-EUR
+      values:
+        2025-01-01:
+          value: 125.99
+        2026-01-01:
+          value: 130.21
+        2027-01-01:
+          value: 134.45
+    uitwonend:
+      description: Living away from parents
+      metadata:
+        unit: currency-EUR
+      values:
+        2025-01-01:
+          value: 314.00
+        2026-01-01:
+          value: 324.52
+        2027-01-01:
+          value: 335.10
+  aanvullende_beurs:
+    description: Aanvullende beurs (supplementary grant depending on parents' income)
+    maximum:
+      description: Maximum per month (same for living at home or away)
+      metadata:
+        unit: currency-EUR
+      values:
+        2025-01-01:
+          value: 475.17
+        2026-01-01:
+          value: 491.08
+        2027-01-01:
+          value: 507.10
+    vrije_voet_per_ouder:
+      description: Yearly income per parent that does not count (regular case)
+      metadata:
+        unit: currency-EUR
+      values:
+        2025-01-01:
+          value: 19515.00
+        2026-01-01:
+          value: 20750.30
+        2027-01-01:
+          value: 21746.31
+    kortingspercentage:
+      description: Share of parental income above the vrije voet expected as parental contribution
+      metadata:
+        unit: /1
+      values:
+        2024-01-01:
+          value: 0.136
+  basislening:
+    description: Interest-bearing loan per month
+    metadata:
+      unit: currency-EUR
+    values:
+      2025-01-01:
+        value: 304.95
+      2026-01-01:
+        value: 315.17
+      2027-01-01:
+        value: 325.44
+  collegegeldkrediet:
+    description: Tuition fee loan per month (statutory tuition fee / 12), changes every 1 September
+    metadata:
+      unit: currency-EUR
+    values:
+      2025-09-01:
+        value: 216.75
+      2026-09-01:
+        value: 224.50
+      2027-09-01:
+        value: 230.92
+mbo:
+  description: MBO full-time (bol)
+  minimumleeftijd:
+    description: Minimum age for a grant or loan
+    metadata:
+      unit: year
+    values:
+      2025-01-01:
+        value: 18
+  basisbeurs:
+    description: Basisbeurs per month
+    thuiswonend:
+      description: Living with parents
+      metadata:
+        unit: currency-EUR
+      values:
+        2025-01-01:
+          value: 103.78
+        2026-01-01:
+          value: 107.26
+        2027-01-01:
+          value: 110.76
+    uitwonend:
+      description: Living away from parents
+      metadata:
+        unit: currency-EUR
+      values:
+        2025-01-01:
+          value: 338.68
+        2026-01-01:
+          value: 350.03
+        2027-01-01:
+          value: 361.44
+  aanvullende_beurs:
+    description: Aanvullende beurs
+    maximum:
+      description: Maximum per month without the lesgeld supplement
+      thuiswonend:
+        description: Living with parents
+        metadata:
+          unit: currency-EUR
+        values:
+          2025-01-01:
+            value: 306.32
+          2026-01-01:
+            value: 316.58
+          2027-01-01:
+            value: 326.89
+      uitwonend:
+        description: Living away from parents
+        metadata:
+          unit: currency-EUR
+        values:
+          2025-01-01:
+            value: 333.72
+          2026-01-01:
+            value: 344.90
+          2027-01-01:
+            value: 356.14
+    lesgeld_toeslag:
+      description: Added to the maximum when lesgeld is due (students 18+ on 1 August), changes every 1 August
+      metadata:
+        unit: currency-EUR
+      values:
+        2025-08-01:
+          value: 121.50
+        2026-08-01:
+          value: 125.92
+        2027-08-01:
+          value: 129.50
+    vrije_voet_per_ouder:
+      description: Yearly income per parent that does not count
+      metadata:
+        unit: currency-EUR
+      values:
+        2025-01-01:
+          value: 21774.38
+        2026-01-01:
+          value: 23152.70
+        2027-01-01:
+          value: 24264.03
+    kortingspercentage:
+      description: Share of parental income above the vrije voet expected as parental contribution
+      metadata:
+        unit: /1
+      values:
+        2024-01-01:
+          value: 0.26
+  basislening:
+    description: Interest-bearing loan per month
+    metadata:
+      unit: currency-EUR
+    values:
+      2025-01-01:
+        value: 226.08
+      2026-01-01:
+        value: 233.65
+      2027-01-01:
+        value: 241.27
+tegemoetkoming_scholieren:
+  description: Tegemoetkoming scholieren (Wtos) — secondary school students aged 18+
+  metadata:
+    reference:
+      - title: DUO — Tegemoetkoming scholieren bedragen
+        href: https://duo.nl/particulier/tegemoetkoming-scholieren/bedragen.jsp
+  minimumleeftijd:
+    description: Minimum age
+    metadata:
+      unit: year
+    values:
+      2025-01-01:
+        value: 18
+  basistoelage:
+    description: Basistoelage per month (gift, not income-dependent)
+    thuiswonend:
+      description: Living with parents
+      metadata:
+        unit: currency-EUR
+      values:
+        2026-01-01:
+          value: 147.65
+    uitwonend:
+      description: Living away from parents
+      metadata:
+        unit: currency-EUR
+      values:
+        2026-01-01:
+          value: 344.26

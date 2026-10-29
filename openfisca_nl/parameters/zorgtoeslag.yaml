@@ -1,0 +1,101 @@
+description: Zorgtoeslag (Wet op de zorgtoeslag)
+metadata:
+  reference:
+    - title: Berekening zorgtoeslag 2026 (Belastingdienst, TG 082-1Z61FD)
+      href: https://download.belastingdienst.nl/toeslagen/docs/berekening_zorgtoeslag_tg0821z61fd.pdf
+    - title: Wet op de zorgtoeslag, art. 2-3
+      href: https://wetten.overheid.nl/BWBR0018451/2026-01-01
+minimumleeftijd:
+  description: Minimum age (verzekerde from the month after turning 18)
+  metadata:
+    unit: year
+  values:
+    2026-01-01:
+      value: 18
+standaardpremie:
+  description: Standaardpremie per insured adult per year
+  metadata:
+    unit: currency-EUR
+  values:
+    2026-01-01:
+      value: 2119
+drempelinkomen:
+  description: Drempelinkomen per year
+  metadata:
+    unit: currency-EUR
+  values:
+    2026-01-01:
+      value: 29736
+normpercentage:
+  description: Normpremie percentages
+  alleenstaand:
+    description: Single applicant
+    tot_drempel:
+      description: Percentage of the drempelinkomen
+      metadata:
+        unit: /1
+      values:
+        2026-01-01:
+          value: 0.01912
+    boven_drempel:
+      description: Percentage of income above the drempelinkomen
+      metadata:
+        unit: /1
+      values:
+        2026-01-01:
+          value: 0.1373
+  partners:
+    description: Applicant with toeslagpartner
+    tot_drempel:
+      description: Percentage of the drempelinkomen
+      metadata:
+        unit: /1
+      values:
+        2026-01-01:
+          value: 0.04289
+    boven_drempel:
+      description: Percentage of combined income above the drempelinkomen
+      metadata:
+        unit: /1
+      values:
+        2026-01-01:
+          value: 0.1373
+factor_partner_niet_verzekerd:
+  description: Factor applied when the toeslagpartner is not insured under the Zvw
+  metadata:
+    unit: /1
+  values:
+    2026-01-01:
+      value: 0.5
+maximaal_toetsingsinkomen:
+  description: Published maximum income (follows from the formula and the 24 euro minimum)
+  alleenstaand:
+    description: Single
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 40857
+  partners:
+    description: Combined, with toeslagpartner
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 51142
+vermogensgrens:
+  description: Asset limit on 1 January
+  alleenstaand:
+    description: Single
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 146011
+  partners:
+    description: With toeslagpartner
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 184633

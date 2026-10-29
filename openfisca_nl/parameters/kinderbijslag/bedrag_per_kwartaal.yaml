@@ -1,0 +1,39 @@
+description: Kinderbijslag per child per quarter, by age of the child (indexed every 1 January and 1 July)
+metadata:
+  type: single_amount
+  threshold_unit: year
+  amount_unit: currency-EUR
+  reference:
+    - title: SVB — Kinderbijslag gaat per 1 juli 2026 omhoog
+      href: https://www.svb.nl/nl/kinderbijslag/nieuws/kinderbijslag-gaat-per-1-juli-2026-omhoog
+brackets:
+  - threshold:
+      2026-01-01:
+        value: 0
+    amount:
+      2026-01-01:
+        value: 295.07
+      2026-07-01:
+        value: 298.40
+  - threshold:
+      2026-01-01:
+        value: 6
+    amount:
+      2026-01-01:
+        value: 358.30
+      2026-07-01:
+        value: 362.35
+  - threshold:
+      2026-01-01:
+        value: 12
+    amount:
+      2026-01-01:
+        value: 421.53
+      2026-07-01:
+        value: 426.29
+  - threshold:
+      2026-01-01:
+        value: 18
+    amount:
+      2026-01-01:
+        value: 0

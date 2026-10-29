@@ -1,0 +1,285 @@
+# Official worked examples from the Belastingdienst "Berekening ... 2026" PDFs
+# (see docs/research/toeslagen-2026.md for sources and the two PDF typos corrected here).
+
+- name: ZT-1 zorgtoeslag, single, income 19,000
+  period: 2026-01
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 30
+        inkomen_uit_arbeid:
+          2026: 19000
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    zorgtoeslag_jaarbedrag: 1550.45
+    zorgtoeslag: 129
+
+- name: ZT-2 zorgtoeslag, partners 7,000 + 26,200, partner not insured (50%)
+  period: 2026-01
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 40
+        inkomen_uit_arbeid:
+          2026: 7000
+      b:
+        leeftijd: 40
+        heeft_nederlandse_zorgverzekering: false
+        inkomen_uit_arbeid:
+          2026: 26200
+    huishoudens:
+      h:
+        partners: [a, b]
+  output:
+    zorgtoeslag_jaarbedrag: 1243.51
+    zorgtoeslag: 103
+
+- name: ZT-4/5 zorgtoeslag maximum, single and partners without income
+  period: 2026-10
+  input:
+    personen:
+      a:
+        leeftijd: 21
+      b:
+        leeftijd: 22
+      c:
+        leeftijd: 23
+    huishoudens:
+      single:
+        partners: [a]
+      couple:
+        partners: [b, c]
+  output:
+    zorgtoeslag: [129, 246]
+
+- name: ZT-6 zorgtoeslag income limit follows from the 24 euro minimum (40,857 paid, 40,858 not)
+  period: 2026-01
+  input:
+    personen:
+      a:
+        leeftijd: 30
+        inkomen_uit_arbeid:
+          2026: 40857
+      b:
+        leeftijd: 30
+        inkomen_uit_arbeid:
+          2026: 40858
+    huishoudens:
+      h1:
+        partners: [a]
+      h2:
+        partners: [b]
+  output:
+    zorgtoeslag: [1, 0]
+    zorgtoeslag_voorwaarde_inkomen: [true, false]
+
+- name: Zorgtoeslag needs a Dutch health insurance (EU student on EHIC only)
+  period: 2026-10
+  input:
+    personen:
+      a:
+        leeftijd: 20
+        heeft_nederlandse_zorgverzekering: false
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    zorgtoeslag_voorwaarde_verzekering: false
+    zorgtoeslag: 0
+
+- name: Zorgtoeslag not for under 18
+  period: 2026-10
+  input:
+    personen:
+      a:
+        leeftijd: 17
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    zorgtoeslag: 0
+
+- name: HT-1 huurtoeslag, single aged 20, rent 600, income 22,000 (youth cap 498.20)
+  period: 2026-01
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 20
+        inkomen_uit_arbeid:
+          2026: 22000
+    huishoudens:
+      h:
+        partners: [a]
+        huur_per_maand: 600
+        zelfstandige_woonruimte: true
+  output:
+    huurtoeslag_huurgrens: 498.20
+    huurtoeslag_ongeafrond: 295.68
+    huurtoeslag: 295
+
+- name: HT-2 huurtoeslag, partners 30 and 27 with a child of 2, rent 1,200, income 34,000
+  period: 2026-01
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 30
+        inkomen_uit_arbeid:
+          2026: 26000
+      b:
+        leeftijd: 27
+        inkomen_uit_arbeid:
+          2026: 8000
+      k:
+        leeftijd: 2
+    huishoudens:
+      h:
+        partners: [a, b]
+        kinderen: [k]
+        huur_per_maand: 1200
+        zelfstandige_woonruimte: true
+  output:
+    huurtoeslag_ongeafrond: 492.03
+    huurtoeslag: 492
+
+- name: HT-3 huurtoeslag, single aged 69, rent 710, income 29,000
+  period: 2026-01
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 69
+        overig_inkomen:
+          2026: 29000
+    huishoudens:
+      h:
+        partners: [a]
+        huur_per_maand: 710
+        zelfstandige_woonruimte: true
+  output:
+    huurtoeslag_ongeafrond: 307.91
+    huurtoeslag: 307
+
+- name: No huurtoeslag for a student room (not self-contained)
+  period: 2026-10
+  input:
+    personen:
+      a:
+        leeftijd: 21
+    huishoudens:
+      h:
+        partners: [a]
+        huur_per_maand: 550
+        zelfstandige_woonruimte: false
+  output:
+    huurtoeslag_voorwaarde_woonruimte: false
+    huurtoeslag: 0
+
+- name: Rent above the cap no longer blocks huurtoeslag in 2026 (capped at 932.93)
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 25
+    huishoudens:
+      h:
+        partners: [a]
+        huur_per_maand: 1100
+        zelfstandige_woonruimte: true
+  output:
+    # A 295.68 + B 0.65 * 214.82 + C 0.40 * 219.91, no income correction
+    huurtoeslag_ongeafrond: 523.28
+    huurtoeslag: 523
+
+- name: KGB-1 kindgebonden budget, partners 45,000, children 4 and 8
+  period: 2026-01
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 35
+        inkomen_uit_arbeid:
+          2026: 25000
+      b:
+        leeftijd: 35
+        inkomen_uit_arbeid:
+          2026: 20000
+      k1:
+        leeftijd: 4
+      k2:
+        leeftijd: 8
+    huishoudens:
+      h:
+        partners: [a, b]
+        kinderen: [k1, k2]
+  output:
+    kindgebonden_budget_jaarbedrag: 4714.72
+    kindgebonden_budget: 392
+
+- name: KGB-2 kindgebonden budget, partners 45,000, children 16 and 13
+  period: 2026-01
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 45
+        inkomen_uit_arbeid:
+          2026: 16000
+      b:
+        leeftijd: 45
+        inkomen_uit_arbeid:
+          2026: 29000
+      k1:
+        leeftijd: 16
+      k2:
+        leeftijd: 13
+    huishoudens:
+      h:
+        partners: [a, b]
+        kinderen: [k1, k2]
+  output:
+    kindgebonden_budget_jaarbedrag: 6402.72
+    kindgebonden_budget: 533
+
+- name: KGB-3 kindgebonden budget, single parent 30,000, child 8
+  period: 2026-01
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 30
+        inkomen_uit_arbeid:
+          2026: 30000
+      k:
+        leeftijd: 8
+    huishoudens:
+      h:
+        partners: [a]
+        kinderen: [k]
+  output:
+    kindgebonden_budget_jaarbedrag: 5975.94
+    kindgebonden_budget: 497
+
+- name: Kinderbijslag per month (quarterly amounts from 1 July 2026 divided by 3)
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 30
+      k1:
+        leeftijd: 3
+      k2:
+        leeftijd: 13
+    huishoudens:
+      h:
+        partners: [a]
+        kinderen: [k1, k2]
+  output:
+    kinderbijslag: 241.56

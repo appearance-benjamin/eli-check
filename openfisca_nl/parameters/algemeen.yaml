@@ -1,0 +1,21 @@
+description: General reference values
+aow_leeftijd:
+  description: AOW (state pension) age in years
+  metadata:
+    unit: year
+    reference:
+      - title: Rijksoverheid — AOW-leeftijd
+        href: https://www.rijksoverheid.nl/onderwerpen/algemene-ouderdomswet-aow/aow-leeftijd-berekenen
+  values:
+    2026-01-01:
+      value: 67
+toeslagen_minimum_jaarbedrag:
+  description: Allowances below this yearly amount (rounded to whole euros) are not paid (Awir art. 14 lid 5)
+  metadata:
+    unit: currency-EUR
+    reference:
+      - title: Awir art. 14
+        href: https://wetten.overheid.nl/BWBR0018472/2026-01-01
+  values:
+    2026-01-01:
+      value: 24

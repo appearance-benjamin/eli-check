@@ -1,0 +1,198 @@
+description: Gemeente Maastricht (Sociale Zaken Maastricht Heuvelland) minima schemes and BsGW kwijtschelding
+metadata:
+  reference:
+    - title: SZMH — Regelingen voor mensen met een laag inkomen
+      href: https://www.socialezaken-mh.nl/regelingen-voor-mensen-met-een-laag-inkomen
+individuele_inkomenstoeslag:
+  description: Individuele inkomenstoeslag (once per 12 months, income at most 100% of the norm for 36 months)
+  metadata:
+    reference:
+      - title: Gemeente Maastricht — Individuele inkomenstoeslag
+        href: https://www.gemeentemaastricht.nl/werk-en-inkomen/individuele-inkomenstoeslag
+      - title: Verordening individuele inkomenstoeslag Maastricht (Gemeenteblad 2026, 40184)
+        href: https://repository.overheid.nl/frbr/officielepublicaties/gmb/2026/gmb-2026-40184/1/pdf/gmb-2026-40184.pdf
+  minimumleeftijd:
+    description: Minimum age
+    metadata:
+      unit: year
+    values:
+      2026-01-01:
+        value: 21
+  inkomensgrens_percentage:
+    description: Maximum net income as a percentage of the bijstandsnorm
+    metadata:
+      unit: /1
+    values:
+      2026-01-01:
+        value: 100
+  bedrag:
+    description: Amount per year
+    alleenstaand:
+      description: Single
+      metadata:
+        unit: currency-EUR
+      values:
+        2026-01-01:
+          value: 561
+    alleenstaande_ouder:
+      description: Single parent
+      metadata:
+        unit: currency-EUR
+      values:
+        2026-01-01:
+          value: 701
+    paar:
+      description: Couple
+      metadata:
+        unit: currency-EUR
+      values:
+        2026-01-01:
+          value: 781
+individuele_studietoeslag:
+  description: Individuele studietoeslag (Participatiewet art. 36b) for students who cannot earn alongside their studies due to a disability, net per month by age
+  metadata:
+    type: single_amount
+    threshold_unit: year
+    amount_unit: currency-EUR
+    reference:
+      - title: SZMH — Individuele studietoeslag
+        href: https://www.socialezaken-mh.nl/inkomen/individuele-studietoeslag
+  brackets:
+    - threshold:
+        2026-01-01:
+          value: 0
+      amount:
+        2026-01-01:
+          value: 0
+    - threshold:
+        2026-01-01:
+          value: 15
+      amount:
+        2026-01-01:
+          value: 117.03
+    - threshold:
+        2026-01-01:
+          value: 16
+      amount:
+        2026-01-01:
+          value: 134.58
+    - threshold:
+        2026-01-01:
+          value: 17
+      amount:
+        2026-01-01:
+          value: 154.08
+    - threshold:
+        2026-01-01:
+          value: 18
+      amount:
+        2026-01-01:
+          value: 195.04
+    - threshold:
+        2026-01-01:
+          value: 19
+      amount:
+        2026-01-01:
+          value: 234.05
+    - threshold:
+        2026-01-01:
+          value: 20
+      amount:
+        2026-01-01:
+          value: 312.06
+    - threshold:
+        2026-01-01:
+          value: 21
+      amount:
+        2026-01-01:
+          value: 390.07
+collectieve_zorgverzekering:
+  description: VGZ Zuid-Limburgpakket — collective health insurance for minima
+  metadata:
+    reference:
+      - title: SZMH — Collectieve zorgverzekering VGZ Zuid-Limburg
+        href: https://www.socialezaken-mh.nl/kind-en-gezin/collectieve-zorgverzekering-vgz-zuid-limburg
+  inkomensgrens_percentage:
+    description: Maximum net income as a percentage of the social minimum
+    metadata:
+      unit: /1
+    values:
+      2026-01-01:
+        value: 150
+minimaregelingen_inkomensgrens_percentage:
+  description: Income limit (% of the bijstandsnorm) for Volwassenenfonds, Jeugdfonds, school-cost allowance and bijzondere bijstand without own contribution
+  metadata:
+    unit: /1
+    reference:
+      - title: Gemeente Maastricht — Kindregelingen
+        href: https://www.gemeentemaastricht.nl/onderwijs-en-jeugd/kindregelingen
+      - title: Gemeente Maastricht — Volwassenenfonds Sport & Cultuur Limburg
+        href: https://www.gemeentemaastricht.nl/werk-en-inkomen/volwassenenfonds-sport-cultuur-limburg
+  values:
+    2026-01-01:
+      value: 110
+schoolkosten:
+  description: Declaratieregeling schoolgaande kinderen, per child per year
+  metadata:
+    reference:
+      - title: Declaratieregeling schoolgaande kinderen Maastricht 2026
+        href: https://lokaleregelgeving.overheid.nl/CVDR756041/1
+  basisschool:
+    description: Primary school (approximated as age 4-11)
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 75
+  voortgezet_onderwijs:
+    description: Secondary school (approximated as age 12-17)
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 300
+kwijtschelding:
+  description: Kwijtschelding gemeentelijke belastingen via BsGW (indication)
+  metadata:
+    reference:
+      - title: BsGW — Voorwaarden voor kwijtschelding
+        href: https://bsgw.nl/nl/veel-gestelde-vragen/kwijtschelding/wat-zijn-de-voorwaarden-voor-kwijtschelding
+      - title: Leidraad Invordering 2008, art. 26.2.12 (students — normbudget counts as income)
+        href: https://wetten.overheid.nl/BWBR0024096/2026-01-01
+  inkomensgrens_percentage:
+    description: Kosten van bestaan as a percentage of the bijstandsnorm
+    metadata:
+      unit: /1
+    values:
+      2026-01-01:
+        value: 100
+  vermogensgrens:
+    description: Savings limit on the BsGW page (Maastricht raised its norm in 2026 by 1,500-2,000; the exact new figure is not published)
+    alleenstaand:
+      description: Single
+      metadata:
+        unit: currency-EUR
+      values:
+        2026-01-01:
+          value: 3700
+    alleenstaande_ouder:
+      description: Single parent
+      metadata:
+        unit: currency-EUR
+      values:
+        2026-01-01:
+          value: 4500
+    paar:
+      description: Couple
+      metadata:
+        unit: currency-EUR
+      values:
+        2026-01-01:
+          value: 4900
+  boekenaftrek_ho:
+    description: Book costs subtracted from the student normbudget in higher education, per month
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 80

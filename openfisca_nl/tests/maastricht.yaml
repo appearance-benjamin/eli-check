@@ -1,0 +1,109 @@
+# Maastricht minima schemes (indicators) — docs/research/maastricht-tax-2026.md, section 1.
+
+- name: Single job seeker without income in Maastricht — minima schemes apply
+  period: 2026-10
+  input:
+    personen:
+      a:
+        leeftijd: 35
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    maastricht_individuele_inkomenstoeslag: true
+    maastricht_individuele_inkomenstoeslag_bedrag: 561
+    maastricht_collectieve_zorgverzekering: true
+    maastricht_kwijtschelding: true
+    maastricht_volwassenenfonds: true
+    maastricht_bijzondere_bijstand: true
+
+- name: Single parent with a child of 8 — higher IIT amount and child schemes
+  period: 2026-10
+  input:
+    personen:
+      a:
+        leeftijd: 30
+      k:
+        leeftijd: 8
+    huishoudens:
+      h:
+        partners: [a]
+        kinderen: [k]
+  output:
+    maastricht_individuele_inkomenstoeslag_bedrag: 701
+    maastricht_kindregelingen: true
+    maastricht_kindregelingen_bedrag: 75
+
+- name: Living outside Maastricht — no Maastricht schemes
+  period: 2026-10
+  input:
+    personen:
+      a:
+        leeftijd: 35
+    huishoudens:
+      h:
+        partners: [a]
+        woont_in_maastricht: false
+  output:
+    maastricht_individuele_inkomenstoeslag_voorwaarde_woonplaats: false
+    maastricht_individuele_inkomenstoeslag: false
+    maastricht_collectieve_zorgverzekering: false
+    maastricht_kwijtschelding: false
+
+- name: Students are excluded from the IIT; income above 150% of the social minimum excludes the collective insurance
+  period: 2026-10
+  input:
+    personen:
+      student:
+        leeftijd: 23
+        onderwijs: wo
+      werkend:
+        leeftijd: 40
+        inkomen_uit_arbeid:
+          2026: 40000
+    huishoudens:
+      h1:
+        partners: [student]
+      h2:
+        partners: [werkend]
+  output:
+    maastricht_individuele_inkomenstoeslag_voorwaarde_geen_studie: [false, true]
+    maastricht_individuele_inkomenstoeslag: [false, false]
+    maastricht_collectieve_zorgverzekering_voorwaarde_inkomen: [true, false]
+
+- name: Studietoeslag for a 21-year-old student with a disability and student finance
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      s:
+        leeftijd: 21
+        onderwijs: hbo
+        heeft_beperking: true
+    huishoudens:
+      h:
+        partners: [s]
+  output:
+    maastricht_individuele_studietoeslag: true
+    maastricht_individuele_studietoeslag_bedrag: 390.07
+
+- name: Kwijtschelding — the maximum student loan counts as income, so a full-grant student is above the norm
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      s:
+        leeftijd: 21
+        onderwijs: wo
+        inkomen_ouders:
+          2026: 55000
+        inkomen_uit_arbeid:
+          2026: 7200
+    huishoudens:
+      h:
+        partners: [s]
+  output:
+    # 600 net wage + 324.52 basisbeurs + 338.09 aanvullende beurs + 468.16 max loan - 80 books
+    kwijtschelding_inkomen_per_maand: 1650.77
+    maastricht_kwijtschelding_voorwaarde_inkomen: false
+    maastricht_kwijtschelding: false

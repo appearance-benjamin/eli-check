@@ -1,0 +1,76 @@
+description: Kindgebonden budget (Wet op het kindgebonden budget)
+metadata:
+  reference:
+    - title: Berekening kindgebonden budget 2026 (Belastingdienst, TG 081-1Z61FD)
+      href: https://download.belastingdienst.nl/toeslagen/docs/berekening_kindgebonden_budget_tg0811z61fd.pdf
+    - title: Wet op het kindgebonden budget, art. 2-3
+      href: https://wetten.overheid.nl/BWBR0022751/2026-01-01
+bedrag_per_kind:
+  description: Amount per child under 18 per year
+  metadata:
+    unit: currency-EUR
+  values:
+    2026-01-01:
+      value: 2580
+verhoging_12_15:
+  description: Extra per child aged 12 to 15
+  metadata:
+    unit: currency-EUR
+  values:
+    2026-01-01:
+      value: 724
+verhoging_16_17:
+  description: Extra per child aged 16 or 17
+  metadata:
+    unit: currency-EUR
+  values:
+    2026-01-01:
+      value: 964
+alleenstaande_ouderkop:
+  description: Extra for a parent without a toeslagpartner
+  metadata:
+    unit: currency-EUR
+  values:
+    2026-01-01:
+      value: 3416
+drempelinkomen:
+  description: Income up to which the full amount is paid
+  alleenstaand:
+    description: Single parent
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 29736
+  partners:
+    description: Parents with toeslagpartner (drempelinkomen + 9.405)
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 39141
+afbouwpercentage:
+  description: Reduction per euro of income above the drempelinkomen
+  metadata:
+    unit: /1
+  values:
+    2026-01-01:
+      value: 0.076
+    2027-01-01:
+      value: 0.0805
+vermogensgrens:
+  description: Asset limit on 1 January
+  alleenstaand:
+    description: Single parent
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 146011
+  partners:
+    description: With toeslagpartner
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 184633

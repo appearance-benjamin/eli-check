@@ -1,0 +1,227 @@
+# Aanvullende beurs cases follow DUO's 2026 calculation forms (docs/research/studiefinanciering-2026.md, section 2.3).
+
+- name: A — HO student living away, parents 30,000 + 25,000
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      s:
+        leeftijd: 19
+        onderwijs: wo
+        inkomen_ouders:
+          2026: 55000
+    huishoudens:
+      h:
+        partners: [s]
+  output:
+    recht_op_studiefinanciering: true
+    basisbeurs: 324.52
+    ouderbijdrage_per_maand: 152.99
+    aanvullende_beurs: 338.09
+    maximale_lening: 468.16
+    collegegeldkrediet: 224.50
+    studentenreisproduct: true
+    studentenreisproduct_waarde: 110.95
+
+- name: B — two children with aanvullende beurs share the parental contribution
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      s:
+        leeftijd: 20
+        onderwijs: hbo
+        woont_bij_ouders: true
+        inkomen_ouders:
+          2026: 100000
+        broers_zussen_met_studiefinanciering: 1
+    huishoudens:
+      h:
+        partners: [s]
+  output:
+    basisbeurs: 130.21
+    aanvullende_beurs: 159.58
+
+- name: C/D — full beurs below twice the vrije voet, nothing at 90,000
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      laag:
+        leeftijd: 19
+        onderwijs: wo
+        inkomen_ouders:
+          2026: 41000
+      hoog:
+        leeftijd: 19
+        onderwijs: wo
+        inkomen_ouders:
+          2026: 90000
+    huishoudens:
+      h1:
+        partners: [laag]
+      h2:
+        partners: [hoog]
+  output:
+    aanvullende_beurs: [491.08, 0]
+    maximale_lening: [315.17, 806.25]
+
+- name: H — MBO living away, January 2026 (lesgeld supplement 121.50)
+  period: 2026-01
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      s:
+        leeftijd: 18
+        onderwijs: mbo_bol
+        inkomen_ouders:
+          2026: 55000
+    huishoudens:
+      h:
+        partners: [s]
+  output:
+    basisbeurs: 350.03
+    aanvullende_beurs_maximum: 466.40
+    aanvullende_beurs: 278.02
+
+- name: I — MBO living at home, October 2026 (lesgeld supplement 125.92)
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      s:
+        leeftijd: 18
+        onderwijs: mbo_bol
+        woont_bij_ouders: true
+        inkomen_ouders:
+          2026: 55000
+    huishoudens:
+      h:
+        partners: [s]
+  output:
+    basisbeurs: 107.26
+    aanvullende_beurs: 254.12
+
+- name: MBO student under 18 gets no grant
+  period: 2026-10
+  input:
+    personen:
+      s:
+        leeftijd: 17
+        onderwijs: mbo_bol
+    huishoudens:
+      h:
+        partners: [s]
+  output:
+    studiefinanciering_voorwaarde_leeftijd: false
+    basisbeurs: 0
+
+- name: No studiefinanciering from age 30
+  period: 2026-10
+  input:
+    personen:
+      s:
+        leeftijd: 30
+        onderwijs: wo
+    huishoudens:
+      h:
+        partners: [s]
+  output:
+    recht_op_studiefinanciering: false
+    basisbeurs: 0
+
+- name: EU students — 32 h/month, more than 24 h for 6+ months, or enough earnings count as migrant worker
+  period: 2026-10
+  input:
+    personen:
+      uren32:
+        leeftijd: 21
+        onderwijs: wo
+        nationaliteit: eer
+        werkuren_per_maand: 32
+        inkomen_uit_arbeid:
+          2026: 4000
+      uren25:
+        leeftijd: 21
+        onderwijs: wo
+        nationaliteit: eer
+        werkuren_per_maand: 25
+        maanden_gewerkt:
+          2026: 8
+        inkomen_uit_arbeid:
+          2026: 2600
+      verdienen:
+        leeftijd: 22
+        onderwijs: hbo
+        nationaliteit: eer
+        werkuren_per_maand: 20
+        inkomen_uit_arbeid:
+          2026: 9000
+      te_weinig:
+        leeftijd: 21
+        onderwijs: wo
+        nationaliteit: eer
+        werkuren_per_maand: 20
+        inkomen_uit_arbeid:
+          2026: 3000
+    huishoudens:
+      h1:
+        partners: [uren32]
+      h2:
+        partners: [uren25]
+      h3:
+        partners: [verdienen]
+      h4:
+        partners: [te_weinig]
+  output:
+    is_migrerend_werknemer: [true, true, true, false]
+    recht_op_studiefinanciering: [true, true, true, false]
+    # EU students without worker status can still borrow for tuition
+    collegegeldkrediet: [224.50, 224.50, 224.50, 224.50]
+
+- name: EU student after 5 years in the Netherlands is treated as Dutch
+  period: 2026-10
+  input:
+    personen:
+      s:
+        leeftijd: 20
+        onderwijs: wo
+        nationaliteit: eer
+        jaren_in_nederland: 5
+    huishoudens:
+      h:
+        partners: [s]
+  output:
+    recht_op_studiefinanciering: true
+
+- name: Non-EU student on a study permit gets no student finance and no tuition loan
+  period: 2026-10
+  input:
+    personen:
+      s:
+        leeftijd: 22
+        onderwijs: wo
+        nationaliteit: niet_eer_overig
+        werkuren_per_maand: 60
+    huishoudens:
+      h:
+        partners: [s]
+  output:
+    recht_op_studiefinanciering: false
+    collegegeldkrediet: 0
+
+- name: Tegemoetkoming scholieren for an 18-year-old at secondary school
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      s:
+        leeftijd: 18
+        onderwijs: vo
+        woont_bij_ouders: true
+    huishoudens:
+      h:
+        partners: [s]
+  output:
+    tegemoetkoming_scholieren: 147.65
+    basisbeurs: 0

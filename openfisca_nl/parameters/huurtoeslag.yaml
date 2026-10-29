@@ -1,0 +1,156 @@
+description: Huurtoeslag (Wet op de huurtoeslag), simplified system from 1 January 2026
+metadata:
+  reference:
+    - title: Berekening huurtoeslag 2026 (Belastingdienst, TG 083-1Z61FD)
+      href: https://download.belastingdienst.nl/toeslagen/docs/berekening_huurtoeslag_tg0831z61fd.pdf
+    - title: Huurtoeslag verandert vanaf 2026
+      href: https://www.belastingdienst.nl/wps/wcm/connect/nl/huurtoeslag/content/huurtoeslag-verandert-vanaf-2026
+    - title: Wet op de huurtoeslag
+      href: https://wetten.overheid.nl/BWBR0008659/2026-01-01
+minimumleeftijd:
+  description: Minimum age of the tenant
+  metadata:
+    unit: year
+  values:
+    2026-01-01:
+      value: 18
+jongerenleeftijd:
+  description: Households where everyone is younger than this (no children, no disability) get the lower rent cap
+  metadata:
+    unit: year
+  values:
+    2026-01-01:
+      value: 21
+huurgrens:
+  description: Rent above this cap is not subsidised (since 2026 it is a cap, no longer a bar to entitlement)
+  standaard:
+    description: Standard
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 932.93
+  jongeren:
+    description: Everyone in the household under 21
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 498.20
+basishuur:
+  description: Fixed base rent the household pays itself
+  eenpersoons:
+    description: One-person household
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 202.52
+  meerpersoons:
+    description: Household of two or more
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 200.71
+kwaliteitskortingsgrens:
+  description: Kwaliteitskortingsgrens
+  metadata:
+    unit: currency-EUR
+  values:
+    2026-01-01:
+      value: 498.20
+aftoppingsgrens:
+  description: Aftoppingsgrens
+  een_twee_personen:
+    description: One or two persons
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 713.02
+  drie_of_meer_personen:
+    description: Three or more persons
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 764.14
+percentage:
+  description: Share of each rent band that is subsidised
+  tot_kwaliteitskortingsgrens:
+    description: Basishuur up to kwaliteitskortingsgrens (deel A)
+    metadata:
+      unit: /1
+    values:
+      2026-01-01:
+        value: 1
+  tot_aftoppingsgrens:
+    description: Kwaliteitskortingsgrens up to aftoppingsgrens (deel B)
+    metadata:
+      unit: /1
+    values:
+      2026-01-01:
+        value: 0.65
+  tot_huurgrens:
+    description: Aftoppingsgrens up to huurgrens (deel C)
+    metadata:
+      unit: /1
+    values:
+      2026-01-01:
+        value: 0.40
+inkomensijkpunt:
+  description: Yearly income above which the income correction starts
+  eenpersoons:
+    description: One-person household
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 23425
+  meerpersoons:
+    description: Household of two or more
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 31500
+afbouwpercentage:
+  description: Income correction per year on income above the ijkpunt (applied /12 per month)
+  eenpersoons:
+    description: One-person household
+    metadata:
+      unit: /1
+    values:
+      2026-01-01:
+        value: 0.27
+  meerpersoons:
+    description: Household of two or more
+    metadata:
+      unit: /1
+    values:
+      2026-01-01:
+        value: 0.22
+vrijstelling_inkomen_kind:
+  description: Only income above this amount counts for co-resident children under 23
+  metadata:
+    unit: currency-EUR
+  values:
+    2026-01-01:
+      value: 6218
+vermogensgrens:
+  description: Asset limit on 1 January (Awir art. 7)
+  alleenstaand:
+    description: Single applicant
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 38479
+  partners:
+    description: With toeslagpartner
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 76958

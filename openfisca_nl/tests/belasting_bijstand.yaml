@@ -1,0 +1,162 @@
+# Income tax: worked by hand from the 2025/2026 Belastingdienst tables (docs/research/maastricht-tax-2026.md, section 2).
+
+- name: No income tax on a small side job (below about 11,358 in 2026)
+  period: 2026
+  absolute_error_margin: 1
+  input:
+    personen:
+      a:
+        inkomen_uit_arbeid: 11300
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    inkomstenbelasting: 0
+
+- name: Tax on 20,000 wage — 2026 (box 1 7,150 - AHK 3,115 - arbeidskorting 3,487.54)
+  period: 2026
+  absolute_error_margin: 0.05
+  input:
+    personen:
+      a:
+        inkomen_uit_arbeid: 20000
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    inkomstenbelasting: 547.46
+
+- name: Tax on 20,000 wage — 2025 (box 1 7,164 - AHK 3,068 - arbeidskorting 3,331.62)
+  period: 2025
+  absolute_error_margin: 0.05
+  input:
+    personen:
+      a:
+        inkomen_uit_arbeid: 20000
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    inkomstenbelasting: 764.38
+
+- name: Summer job — 3 months at 2,000 is withheld as if 24,000 a year, all of it comes back
+  period: 2026
+  absolute_error_margin: 0.05
+  input:
+    personen:
+      a:
+        inkomen_uit_arbeid: 6000
+        maanden_gewerkt: 3
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    inkomstenbelasting: 0
+    geschatte_ingehouden_loonheffing: 184.27
+    belastingteruggave: 184.27
+
+- name: Refund uses the withheld amount the user enters
+  period: 2026
+  input:
+    personen:
+      a:
+        inkomen_uit_arbeid: 8000
+        ingehouden_loonheffing: 500
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    belastingteruggave: 500
+
+# Bijstand
+
+- name: Bijstand for a single person aged 30 without income (norm from 1 July 2026)
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 30
+        onderwijs: geen
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    bijstandsnorm: 1419.46
+    bijstand: 1419.46
+
+- name: Bijstand norms for couples (both 21+, one under 21) and a single 19-year-old
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 30
+      b:
+        leeftijd: 28
+      c:
+        leeftijd: 25
+      d:
+        leeftijd: 19
+      e:
+        leeftijd: 19
+    huishoudens:
+      paar:
+        partners: [a, b]
+      gemengd:
+        partners: [c, d]
+      jong:
+        partners: [e]
+  output:
+    bijstandsnorm: [2027.79, 1364.32, 350.42]
+
+- name: Bijstand tops up a low net income
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 40
+        inkomen_uit_arbeid:
+          2026: 6000
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    bijstand: 919.46
+
+- name: No bijstand for students under 27 or with student finance, nor from AOW age or above the asset limit
+  period: 2026-10
+  input:
+    personen:
+      student:
+        leeftijd: 22
+        onderwijs: wo
+      student_28:
+        leeftijd: 28
+        onderwijs: wo
+      student_31:
+        leeftijd: 31
+        onderwijs: wo
+      aow:
+        leeftijd: 67
+      spaarder:
+        leeftijd: 40
+        vermogen:
+          2026: 9000
+    huishoudens:
+      h1:
+        partners: [student]
+      h2:
+        partners: [student_28]
+      h3:
+        partners: [student_31]
+      h4:
+        partners: [aow]
+      h5:
+        partners: [spaarder]
+  output:
+    bijstand_voorwaarde_geen_studie: [false, false, true, true, true]
+    bijstand_voorwaarde_leeftijd: [true, true, true, false, true]
+    bijstand_voorwaarde_vermogen: [true, true, true, true, false]
+    bijstand: [0, 0, 1419.46, 0, 0]
