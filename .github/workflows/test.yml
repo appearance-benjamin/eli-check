@@ -1,4 +1,4 @@
-name: Rules tests
+name: Tests
 
 on:
   push:
@@ -14,3 +14,19 @@ jobs:
           python-version: "3.13"
       - run: pip install ".[dev]"
       - run: openfisca test openfisca_nl/tests --country-package openfisca_nl
+
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t eli-check .
+      - run: docker run -d -p 8000:8000 --name eli-check eli-check
+      - name: Smoke test — page loads and a calculation works
+        run: |
+          for i in $(seq 1 30); do curl -fs http://localhost:8000/ > /dev/null && break; sleep 2; done
+          curl -fs http://localhost:8000/ | grep -q "Eli Check"
+          curl -fs -X POST http://localhost:8000/api/calculate -H "Content-Type: application/json" \
+            -d '{"personen":{"ik":{"leeftijd":{"2026-10":21}}},"huishoudens":{"h":{"partners":["ik"],"zorgtoeslag":{"2026-10":null}}}}' \
+            | python3 -c "import json, sys; assert json.load(sys.stdin)['huishoudens']['h']['zorgtoeslag']['2026-10'] == 129"
+      - if: failure()
+        run: docker logs eli-check
