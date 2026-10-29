@@ -3,7 +3,6 @@ import { t, L, getLang, setLang, money, number } from "./i18n.js";
 import { SCHEMES, STATIC_TIPS, HELP, CAUSE, CONDITION_TEXT, conditionPrefix } from "./benefits.js";
 import { calculate } from "./api.js";
 import { icon, chevron, check, external } from "./icons.js";
-import { mountGradientWave } from "./gradient-wave.js";
 
 const app = document.getElementById("app");
 const progress = document.querySelector(".progress");
@@ -139,19 +138,9 @@ function savedTheme() {
   }
 }
 
-// Slow pastel wave behind the whole page; its colours are the --wave token of the current theme.
-const waveColors = () => getComputedStyle(document.documentElement).getPropertyValue("--wave").trim().split(/\s+/);
-const wave = mountGradientWave(document.querySelector(".backdrop"), {
-  colors: waveColors(),
-  noiseSpeed: 0.000004,
-  deform: { incline: 0.2, noiseAmp: 200, noiseFlow: 3 },
-  startTime: 6000,
-});
-
 function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
   document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#000000" : "#fbfbfd";
-  wave?.setColors(waveColors());
   renderChrome();
 }
 

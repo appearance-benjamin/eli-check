@@ -28,8 +28,6 @@
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI Variable Text",
     "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
-  /* Background wave colours (js/gradient-wave.js): page colour first, then three soft tints. */
-  --wave: #fbfbfd #ffdbe7 #ffe6cf #e8e0ff;
   color-scheme: light;
 }
 
@@ -55,7 +53,6 @@
   --header-bg: rgba(22, 22, 23, 0.72);
   --shadow-sm: none;
   --shadow: 0 0 0 1px rgba(255, 255, 255, 0.04);
-  --wave: #000000 #26101c #241808 #18122e;
   color-scheme: dark;
 }
 
@@ -705,13 +702,47 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 
 /* ---------- Background ---------- */
 
-/* Slow pastel wave behind the whole page (js/gradient-wave.js draws into it). */
 .backdrop {
   position: fixed;
   inset: 0;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
+}
+
+/* Aurora lights in the top-right corner: a plain-CSS port of the "AuroraBackground" component.
+   Stripes over a blue-violet band, blurred, with a slowly sliding copy blended on top. */
+.aurora {
+  --stripes: repeating-linear-gradient(100deg, #fff 0%, #fff 7%, transparent 10%, transparent 12%, #fff 16%);
+  --aurora: repeating-linear-gradient(100deg, #3b82f6 10%, #a5b4fc 15%, #93c5fd 20%, #ddd6fe 25%, #60a5fa 30%);
+  position: absolute;
+  inset: -10px;
+  background-image: var(--stripes), var(--aurora);
+  background-size: 300%, 200%;
+  background-position: 50% 50%, 50% 50%;
+  filter: blur(10px) invert(1);
+  opacity: 0.5;
+  will-change: transform;
+  -webkit-mask-image: radial-gradient(ellipse at 100% 0%, #000 10%, transparent 70%);
+  mask-image: radial-gradient(ellipse at 100% 0%, #000 10%, transparent 70%);
+}
+.aurora::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--stripes), var(--aurora);
+  background-size: 200%, 100%;
+  background-attachment: fixed;
+  mix-blend-mode: difference;
+  animation: aurora 60s linear infinite;
+}
+:root[data-theme="dark"] .aurora {
+  --stripes: repeating-linear-gradient(100deg, #000 0%, #000 7%, transparent 10%, transparent 12%, #000 16%);
+  filter: blur(10px);
+}
+@keyframes aurora {
+  from { background-position: 50% 50%, 50% 50%; }
+  to { background-position: 350% 50%, 350% 50%; }
 }
 
 /* ---------- Motion ---------- */
@@ -727,6 +758,8 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   html { scroll-behavior: auto; }
+  /* An infinite animation at 0.01ms would flicker; keep the aurora still instead. */
+  .aurora::after { animation: none !important; }
 }
 
 /* ---------- Responsive ---------- */
