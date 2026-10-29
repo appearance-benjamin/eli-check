@@ -110,6 +110,7 @@ function renderChrome() {
   document.title = t("title");
   document.querySelectorAll("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === getLang())));
   document.getElementById("footer-text").textContent = t("footer");
+  document.getElementById("source-link").textContent = t("sourceCode");
   const label = t(document.documentElement.dataset.theme === "dark" ? "themeToLight" : "themeToDark");
   themeButton.setAttribute("aria-label", label);
   themeButton.title = label;

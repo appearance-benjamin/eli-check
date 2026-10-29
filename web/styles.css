@@ -679,6 +679,9 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
   color: var(--text-3);
 }
 .footer p { max-width: 760px; margin: 0 auto; }
+.footer .footer-links { margin-top: 8px; }
+.footer a { color: var(--text-2); text-decoration: underline; text-underline-offset: 2px; }
+.footer a:hover { color: var(--text); }
 
 /* ---------- Background ---------- */
 
