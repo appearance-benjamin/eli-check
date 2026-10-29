@@ -139,9 +139,19 @@ function savedTheme() {
   }
 }
 
+// Slow pastel wave behind the whole page; its colours are the --wave token of the current theme.
+const waveColors = () => getComputedStyle(document.documentElement).getPropertyValue("--wave").trim().split(/\s+/);
+const wave = mountGradientWave(document.querySelector(".backdrop"), {
+  colors: waveColors(),
+  noiseSpeed: 0.000004,
+  deform: { incline: 0.2, noiseAmp: 200, noiseFlow: 3 },
+  startTime: 6000,
+});
+
 function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
   document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#000000" : "#fbfbfd";
+  wave?.setColors(waveColors());
   renderChrome();
 }
 
@@ -167,9 +177,8 @@ function renderHome() {
   mount(`
     <div class="home">
       <section class="hero">
-        <div class="hero-wave"></div>
         <p class="eyebrow">${t("heroEyebrow")}</p>
-        <h1>${t("heroTitleA")}<span class="hero-accent">${t("heroTitleB")}</span></h1>
+        <h1>${t("heroTitleA")}<span class="bloom-text">${t("heroTitleB")}</span></h1>
         <p class="lead">${t("heroLead")}</p>
         <div class="hero-actions">
           <button type="button" class="btn btn-primary btn-large" data-action="start">${t("getStarted")}</button>
@@ -208,12 +217,6 @@ function renderHome() {
         </ol>
       </section>
     </div>`);
-
-  // Colours from the old logo: violet base with pink, orange and lilac waves.
-  mountGradientWave(app.querySelector(".hero-wave"), {
-    colors: ["#6d28d9", "#ff5f8f", "#ff9f45", "#a78bfa"],
-    startTime: 4000,
-  });
 }
 
 // ---------- questions ----------

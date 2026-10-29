@@ -1,7 +1,8 @@
-// Animated WebGL mesh gradient for the home hero.
+// Animated WebGL mesh gradient for the page background.
 // Ported from a React/TypeScript "GradientWave" component to a plain module: the mesh and shaders
-// are the same; sizing follows the container, it pauses off-screen, draws one still frame when the
-// visitor prefers reduced motion, and cleans itself up once its canvas leaves the page.
+// are the same; sizing follows the container, it runs at most 30 fps and pauses off-screen, draws
+// one still frame when the visitor prefers reduced motion, and cleans itself up once its canvas
+// leaves the page. Colours can change on the fly (light/dark theme).
 
 function normalizeColor(hex) {
   const n = parseInt(hex.replace("#", ""), 16);
@@ -417,6 +418,15 @@ class Gradient {
     this.mesh.geometry.setSize(width, height);
   }
 
+  setColors(hexColors) {
+    const colors = hexColors.slice(0, 4).map(normalizeColor);
+    this.uniforms.u_baseColor.value = colors[0];
+    this.uniforms.u_waveLayers.value.forEach((layer, i) => {
+      if (colors[i + 1]) layer.value.color.value = colors[i + 1];
+    });
+    this.draw();
+  }
+
   draw() {
     this.uniforms.u_time.value = this.time;
     this.minigl.render();
@@ -424,10 +434,12 @@ class Gradient {
 
   animate = (timestamp) => {
     if (!this.isPlaying) return;
+    this.frame = requestAnimationFrame(this.animate);
+    // A slow background doesn't need more than 30 frames a second.
+    if (timestamp - this.last < 1000 / 30) return;
     this.time += Math.min(timestamp - this.last, 1000 / 15);
     this.last = timestamp;
     this.draw();
-    this.frame = requestAnimationFrame(this.animate);
   };
 
   start() {
@@ -506,5 +518,5 @@ export function mountGradientWave(container, options = {}) {
   watcher.observe(canvas);
   gradient.draw();
   sync();
-  return { destroy };
+  return { destroy, setColors: (colors) => gradient.setColors(colors) };
 }

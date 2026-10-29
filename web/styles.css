@@ -28,7 +28,8 @@
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI Variable Text",
     "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
-  --blob-opacity: 0.2;
+  /* Background wave colours (js/gradient-wave.js): page colour first, then three soft tints. */
+  --wave: #fbfbfd #ffdbe7 #ffe6cf #e8e0ff;
   color-scheme: light;
 }
 
@@ -54,7 +55,7 @@
   --header-bg: rgba(22, 22, 23, 0.72);
   --shadow-sm: none;
   --shadow: 0 0 0 1px rgba(255, 255, 255, 0.04);
-  --blob-opacity: 0.16;
+  --wave: #000000 #26101c #241808 #18122e;
   color-scheme: dark;
 }
 
@@ -111,8 +112,16 @@ button { font: inherit; color: inherit; }
   padding: 0 22px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
+
+.brand {
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+.brand:hover { text-decoration: none; }
 
 .topbar-actions { display: flex; align-items: center; gap: 10px; }
 
@@ -211,20 +220,7 @@ button { font: inherit; color: inherit; }
 
 .home { max-width: 1024px; margin: 0 auto; padding: 0 22px; }
 
-/* The hero is a panel with the animated gradient (js/gradient-wave.js) behind white text;
-   the CSS gradient shows while it loads and where WebGL isn't available. */
-.hero {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  margin-top: 16px;
-  padding: clamp(64px, 12vh, 128px) 28px clamp(56px, 9vh, 96px);
-  border-radius: 32px;
-  text-align: center;
-  color: #fff;
-  background: linear-gradient(120deg, #6d28d9, #ff5f8f 55%, #ff9f45);
-}
-.hero-wave { position: absolute; inset: 0; z-index: -1; }
+.hero { text-align: center; padding: clamp(56px, 11vh, 120px) 0 40px; }
 .eyebrow {
   font-size: 15px;
   font-weight: 600;
@@ -232,28 +228,28 @@ button { font: inherit; color: inherit; }
   letter-spacing: 0;
   margin-bottom: 14px;
 }
-.hero .eyebrow { color: rgba(255, 255, 255, 0.86); }
 .hero h1 {
   font-size: clamp(44px, 8vw, 84px);
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.04;
-  text-shadow: 0 2px 30px rgba(60, 10, 90, 0.2);
+}
+.bloom-text {
+  background: var(--bloom);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .hero .lead {
   max-width: 640px;
   margin: 22px auto 0;
   font-size: clamp(19px, 2.4vw, 24px);
   line-height: 1.38;
-  color: rgba(255, 255, 255, 0.94);
+  color: var(--text-2);
   letter-spacing: -0.015em;
-  text-shadow: 0 1px 16px rgba(60, 10, 90, 0.18);
 }
 .hero-actions { margin-top: 34px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-.hero .btn-primary { background: #fff; color: #1d1d1f; }
-.hero .btn-primary:hover { background: rgba(255, 255, 255, 0.88); }
-.hero .btn-link { color: #fff; }
-.hero-meta { margin-top: 18px; font-size: 14px; color: rgba(255, 255, 255, 0.8); }
+.hero-meta { margin-top: 18px; font-size: 14px; color: var(--text-3); }
 
 .paths {
   display: grid;
@@ -709,44 +705,13 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 
 /* ---------- Background ---------- */
 
-/* Three soft petals in the logo colours, drifting slowly behind everything. */
+/* Slow pastel wave behind the whole page (js/gradient-wave.js draws into it). */
 .backdrop {
   position: fixed;
   inset: 0;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-}
-.backdrop span {
-  position: absolute;
-  width: 70vmax;
-  height: 70vmax;
-  border-radius: 50%;
-  opacity: var(--blob-opacity);
-  will-change: transform;
-  animation: drift 40s ease-in-out infinite alternate;
-}
-.backdrop span:nth-child(1) {
-  top: -38vmax; left: -22vmax;
-  background: radial-gradient(closest-side, #ff5f8f, rgba(255, 95, 143, 0));
-}
-.backdrop span:nth-child(2) {
-  top: -18vmax; right: -34vmax;
-  background: radial-gradient(closest-side, #8b5cf6, rgba(139, 92, 246, 0));
-  animation-duration: 52s;
-  animation-direction: alternate-reverse;
-}
-.backdrop span:nth-child(3) {
-  bottom: -46vmax; left: 12vmax;
-  background: radial-gradient(closest-side, #ff9f45, rgba(255, 159, 69, 0));
-  animation-duration: 64s;
-  animation-delay: -20s;
-}
-
-@keyframes drift {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(9vmax, 7vmax, 0) scale(1.12); }
-  100% { transform: translate3d(-7vmax, 12vmax, 0) scale(0.92); }
 }
 
 /* ---------- Motion ---------- */
@@ -762,7 +727,6 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   html { scroll-behavior: auto; }
-  .backdrop span { animation: none; }
 }
 
 /* ---------- Responsive ---------- */
@@ -772,7 +736,6 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
   .features { grid-template-columns: 1fr; gap: 26px; padding-top: 64px; }
   .steps { padding: 36px 24px; }
   .steps ol { grid-template-columns: 1fr; }
-  .hero { border-radius: 24px; padding: 56px 20px 48px; }
   .path { min-height: 0; padding: 28px 24px; }
   .field { height: 68px; padding: 0 18px; }
   .field input { font-size: 28px; }
