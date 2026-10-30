@@ -211,9 +211,11 @@ button { font: inherit; color: inherit; }
 }
 .btn-link:hover { text-decoration: underline; }
 .btn-large { min-height: 56px; padding: 16px 34px; font-size: 18px; }
-/* The home call-to-action in the purple of the bloom text and the skyline. */
+/* The home call-to-action and its link in the purple of the bloom text and the skyline. */
 .btn-bloom { background: #7468ad; }
 .btn-bloom:hover { background: #665b9e; }
+.hero .btn-link { color: #7468ad; }
+:root[data-theme="dark"] .hero .btn-link { color: #b3a6d6; }
 
 .chev { width: 9px; height: 15px; flex: none; }
 
