@@ -804,7 +804,7 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 .sk-moon-stop { stop-color: var(--sk-moon); }
 .sk-star { fill: #fff; }
 .sk-cloud { fill: var(--sk-cloud); opacity: 0.85; }
-.sk-rider { display: none; fill: none; stroke: var(--sk-rider); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.sk-rider { fill: none; stroke: var(--sk-rider); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .sk-rider .sk-head { fill: var(--sk-rider); stroke: none; }
 .sk-far { fill: var(--sk-far); }
 .sk-back { fill: var(--sk-back); }
@@ -838,15 +838,18 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 :root[data-theme="dark"] .sk-lantern,
 .sk-lamplight { animation: sk-glow 5s ease-in-out infinite; }
 @keyframes sk-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-.sk-ride { animation: sk-ride 20s linear infinite; }
-@keyframes sk-ride { from { transform: translateX(520px); } to { transform: translateX(1120px); } }
+/* By day a cyclist crosses the bridge and the sun's glow slowly swells and fades. */
+:root[data-theme="dark"] .sk-rider { display: none; }
+.sk-ride { animation: sk-ride 30s linear infinite; }
+@keyframes sk-ride { from { transform: translateX(360px); } to { transform: translateX(1260px); } }
+.sk-sunglow { transform-box: fill-box; transform-origin: center; animation: sk-sunglow 8s ease-in-out infinite; }
+@keyframes sk-sunglow { 0%, 100% { opacity: 0.6; transform: scale(0.92); } 50% { opacity: 1; transform: scale(1.08); } }
 @keyframes sk-ripple {
   0%, 100% { opacity: 0.15; transform: translateX(-18px); }
   50% { opacity: 1; transform: translateX(18px); }
 }
 
-/* Phones: the whole first screen is the scene, with the headline in the sky and,
-   by day, cyclists crossing the bridge. */
+/* Phones: the whole first screen is the scene, with the headline in the sky. */
 @media (max-width: 600px) {
   .home-hero { --hero-h: max(calc(100svh - 52px), 720px); position: relative; min-height: var(--hero-h); }
   /* Smaller type, centred in the sky above the Sint-Janstoren (its spire is at 57% of the height). */
@@ -875,7 +878,6 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
   /* The tower stands 30 units right of the drawing's middle; shift it to the centre of the screen. */
   .scene svg { width: calc(100% + 60px); height: 100%; margin-left: -60px; aspect-ratio: auto; }
   .sk-cloud { display: none; }
-  :root:not([data-theme="dark"]) .sk-rider { display: inline; }
 }
 
 /* ---------- Motion ---------- */
