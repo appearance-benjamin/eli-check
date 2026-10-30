@@ -5,7 +5,7 @@ aow_leeftijd:
     unit: year
     reference:
       - title: Rijksoverheid — AOW-leeftijd
-        href: https://www.rijksoverheid.nl/onderwerpen/algemene-ouderdomswet-aow/aow-leeftijd-berekenen
+        href: https://www.rijksoverheid.nl/onderwerpen/algemene-ouderdomswet-aow/aow-leeftijd
   values:
     2026-01-01:
       value: 67
