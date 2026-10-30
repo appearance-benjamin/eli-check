@@ -105,7 +105,7 @@ Convention: `<scheme>_voorwaarde_<naam>` is a boolean (True = condition met) wit
 | `bijstandsnorm` | huishouden | month | € | Bijstandsnorm per month (net, incl. holiday allowance) for this household |
 | `inkomen_percentage_bijstandsnorm` | huishouden | month | float | Net household income as a percentage of the social minimum (used by municipal minima schemes) |
 | `netto_huishoudinkomen_per_maand` | huishouden | month | € | Net monthly income of applicant and partner: yearly net / 12 plus student grants (not loans) |
-| `sociaal_minimum` | huishouden | month | € | Social minimum: bijstandsnorm 21+ for a single person or a couple (basis of municipal income limits) |
+| `sociaal_minimum` | huishouden | month | € | Social minimum: bijstandsnorm 21+ (or at AOW age) for a single person or a couple (basis of municipal income limits) |
 
 ## Income tax
 

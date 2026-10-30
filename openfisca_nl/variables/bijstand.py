@@ -19,15 +19,20 @@ class bijstandsnorm(Variable):
     reference = "https://www.rijksoverheid.nl/onderwerpen/bijstand/vraag-en-antwoord/hoe-hoog-is-de-bijstandsuitkering"
 
     def formula(huishouden, period, parameters):
-        normen = parameters(period).bijstand.normen
+        p = parameters(period)
+        normen = p.bijstand.normen
         partner = huishouden("heeft_toeslagpartner", period)
         kinderen = huishouden("aantal_kinderen", period) > 0
         jongste_jong = huishouden("jongste_partner_leeftijd", period) < 21
         oudste_jong = huishouden("oudste_partner_leeftijd", period) < 21
-        alleenstaand = where(jongste_jong, normen.alleenstaand_18_20, normen.alleenstaand_21_plus)
+        aow = huishouden("oudste_partner_leeftijd", period) >= p.algemeen.aow_leeftijd
+        alleenstaand = select(
+            [jongste_jong, aow], [normen.alleenstaand_18_20, normen.alleenstaand_aow], normen.alleenstaand_21_plus
+        )
         paar = select(
-            [oudste_jong, jongste_jong],
+            [aow, oudste_jong, jongste_jong],
             [
+                normen.paar_aow,
                 where(kinderen, normen.paar_18_20_met_kinderen, normen.paar_18_20),
                 where(kinderen, normen.paar_gemengd_met_kinderen, normen.paar_gemengd),
             ],
@@ -57,12 +62,16 @@ class sociaal_minimum(Variable):
     value_type = float
     entity = Huishouden
     definition_period = MONTH
-    label = "Social minimum: bijstandsnorm 21+ for a single person or a couple (basis of municipal income limits)"
+    label = "Social minimum: bijstandsnorm 21+ (or at AOW age) for a single person or a couple (basis of municipal income limits)"
     unit = "currency-EUR"
 
     def formula(huishouden, period, parameters):
-        normen = parameters(period).bijstand.normen
-        return where(huishouden("heeft_toeslagpartner", period), normen.paar_21_plus, normen.alleenstaand_21_plus)
+        p = parameters(period)
+        normen = p.bijstand.normen
+        aow = huishouden("oudste_partner_leeftijd", period) >= p.algemeen.aow_leeftijd
+        alleenstaand = where(aow, normen.alleenstaand_aow, normen.alleenstaand_21_plus)
+        paar = where(aow, normen.paar_aow, normen.paar_21_plus)
+        return where(huishouden("heeft_toeslagpartner", period), paar, alleenstaand)
 
 
 class inkomen_percentage_bijstandsnorm(Variable):

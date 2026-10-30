@@ -246,17 +246,23 @@ class kwijtschelding_inkomen_per_maand(Variable):
     unit = "currency-EUR"
     documentation = """
     Leidraad Invordering art. 26.2.12: for students, the basisbeurs, the maximum aanvullende beurs and the
-    maximum basislening count as income (minus 80 for books in higher education), even when not taken.
+    maximum basislening count as income, even when not taken. Study costs come off: 80 for books in higher
+    education; 70 plus the lesgeld in mbo.
     """
 
     def formula(huishouden, period, parameters):
-        boeken = parameters(period).maastricht.kwijtschelding.boekenaftrek_ho
+        p = parameters(period)
+        k = p.maastricht.kwijtschelding
         onderwijs = huishouden.members("onderwijs", period)
         ho = (onderwijs == Onderwijs.hbo) + (onderwijs == Onderwijs.wo)
+        mbo = onderwijs == Onderwijs.mbo_bol
+        # Lesgeld is due from 18; the maximum aanvullende beurs for mbo already includes it (see
+        # aanvullende_beurs_maximum), so it comes off here again.
+        kosten = ho * k.boekenaftrek_ho + mbo * (k.kostenaftrek_mbo + p.studiefinanciering.mbo.aanvullende_beurs.lesgeld_toeslag)
         # The grants are already in netto_huishoudinkomen_per_maand. maximale_lening includes the part of
         # the aanvullende beurs not granted, so grants + maximale_lening = basisbeurs + max AB + basislening.
         lening = huishouden.members("recht_op_studiefinanciering", period) * (
-            huishouden.members("maximale_lening", period) - ho * boeken
+            huishouden.members("maximale_lening", period) - kosten
         )
         return huishouden("netto_huishoudinkomen_per_maand", period) + huishouden.sum(lening, role=Huishouden.PARTNER)
 

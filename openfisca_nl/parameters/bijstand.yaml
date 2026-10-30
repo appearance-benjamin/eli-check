@@ -70,6 +70,27 @@ normen:
         value: 1747.49
       2026-07-01:
         value: 1769.88
+  alleenstaand_aow:
+    description: Single at AOW age (Participatiewet art. 22; used for kwijtschelding and municipal limits, bijstand itself stops at AOW age)
+    metadata:
+      unit: currency-EUR
+      reference:
+        - title: Normenbrief 1 januari 2026 and 1 juli 2026, art. 22 norms
+          href: https://open.overheid.nl/overheid/openbaarmakingen/api/v0/attachment/0d9b1304-6b7b-4025-bbf7-ca017d7b770a
+    values:
+      2026-01-01:
+        value: 1564.69
+      2026-07-01:
+        value: 1587.34
+  paar_aow:
+    description: Couple where one or both are at AOW age (Participatiewet art. 22)
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 2144.16
+      2026-07-01:
+        value: 2176.10
 vermogensgrens:
   description: Asset limit (Participatiewet art. 34 lid 3)
   alleenstaand:

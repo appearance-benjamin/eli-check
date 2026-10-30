@@ -57,6 +57,10 @@ individuele_studietoeslag:
     reference:
       - title: SZMH — Individuele studietoeslag
         href: https://www.socialezaken-mh.nl/inkomen/individuele-studietoeslag
+      - title: Normenbrief 1 januari 2026, bijlage I (minimumbedragen studietoeslag, art. 7a)
+        href: https://open.overheid.nl/documenten/8d75e6c2-7cc8-4fcb-9532-5bc8e7af6880/file
+      - title: Normenbrief 1 juli 2026
+        href: https://open.overheid.nl/overheid/openbaarmakingen/api/v0/attachment/0d9b1304-6b7b-4025-bbf7-ca017d7b770a
   brackets:
     - threshold:
         2026-01-01:
@@ -69,42 +73,56 @@ individuele_studietoeslag:
           value: 15
       amount:
         2026-01-01:
+          value: 115.55
+        2026-07-01:
           value: 117.03
     - threshold:
         2026-01-01:
           value: 16
       amount:
         2026-01-01:
+          value: 132.88
+        2026-07-01:
           value: 134.58
     - threshold:
         2026-01-01:
           value: 17
       amount:
         2026-01-01:
+          value: 152.14
+        2026-07-01:
           value: 154.08
     - threshold:
         2026-01-01:
           value: 18
       amount:
         2026-01-01:
+          value: 192.57
+        2026-07-01:
           value: 195.04
     - threshold:
         2026-01-01:
           value: 19
       amount:
         2026-01-01:
+          value: 231.09
+        2026-07-01:
           value: 234.05
     - threshold:
         2026-01-01:
           value: 20
       amount:
         2026-01-01:
+          value: 308.12
+        2026-07-01:
           value: 312.06
     - threshold:
         2026-01-01:
           value: 21
       amount:
         2026-01-01:
+          value: 385.14
+        2026-07-01:
           value: 390.07
 collectieve_zorgverzekering:
   description: VGZ Zuid-Limburgpakket — collective health insurance for minima
@@ -157,8 +175,8 @@ kwijtschelding:
     reference:
       - title: BsGW — Voorwaarden voor kwijtschelding
         href: https://bsgw.nl/nl/veel-gestelde-vragen/kwijtschelding/wat-zijn-de-voorwaarden-voor-kwijtschelding
-      - title: Leidraad Invordering 2008, art. 26.2.12 (students — normbudget counts as income)
-        href: https://wetten.overheid.nl/BWBR0024096/2026-01-01
+      - title: Leidraad Invordering 2008, art. 26.2.12 (students — normbudget counts as income; minus 80 in HO, 70 plus lesgeld in mbo)
+        href: https://wetten.overheid.nl/BWBR0024096/2026-07-01
   inkomensgrens_percentage:
     description: Kosten van bestaan as a percentage of the bijstandsnorm
     metadata:
@@ -196,3 +214,10 @@ kwijtschelding:
     values:
       2026-01-01:
         value: 80
+  kostenaftrek_mbo:
+    description: Study costs subtracted from the student normbudget in mbo, per month, on top of the lesgeld (Leidraad 26.2.12 B)
+    metadata:
+      unit: currency-EUR
+    values:
+      2026-01-01:
+        value: 70

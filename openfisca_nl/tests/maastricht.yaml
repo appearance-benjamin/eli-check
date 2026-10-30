@@ -107,3 +107,67 @@
     kwijtschelding_inkomen_per_maand: 1650.77
     maastricht_kwijtschelding_voorwaarde_inkomen: false
     maastricht_kwijtschelding: false
+
+- name: Individuele studietoeslag at 19 — Normenbrief amount in January, the 1 July amount in October
+  period: 2026-01
+  input:
+    personen:
+      a:
+        leeftijd: 19
+        onderwijs: wo
+        heeft_beperking: true
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    maastricht_individuele_studietoeslag_bedrag: 231.09
+
+- name: Individuele studietoeslag at 19 in October 2026
+  period: 2026-10
+  input:
+    personen:
+      a:
+        leeftijd: 19
+        onderwijs: wo
+        heeft_beperking: true
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    maastricht_individuele_studietoeslag_bedrag: 234.05
+
+- name: At AOW age the art. 22 norms apply (single 70; couple 70 and 62)
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 70
+      b:
+        leeftijd: 70
+      c:
+        leeftijd: 62
+    huishoudens:
+      h1:
+        partners: [a]
+      h2:
+        partners: [b, c]
+  output:
+    bijstandsnorm: [1587.34, 2176.10]
+    sociaal_minimum: [1587.34, 2176.10]
+
+- name: Kwijtschelding, mbo student of 19 — normbudget minus 70 and the lesgeld (Leidraad 26.2.12 B)
+  period: 2026-10
+  absolute_error_margin: 0.01
+  input:
+    personen:
+      a:
+        leeftijd: 19
+        onderwijs: mbo_bol
+    huishoudens:
+      h:
+        partners: [a]
+  output:
+    netto_huishoudinkomen_per_maand: 820.85
+    maximale_lening: 233.65
+    kwijtschelding_inkomen_per_maand: 858.58
