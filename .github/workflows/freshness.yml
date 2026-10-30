@@ -1,0 +1,52 @@
+name: Freshness check
+
+# Every Monday: are the rule amounts current for this year (and for 1 July, 1 August,
+# 1 September) and do the official links still work? Keeps one issue, labelled
+# "freshness", up to date: a comment per run with findings, closed when all is current.
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install pyyaml
+      - name: Check rules and links
+        id: check
+        run: |
+          set +e
+          python scripts/check_freshness.py --report report.md
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+      - name: Update the freshness issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STATUS: ${{ steps.check.outputs.status }}
+        run: |
+          gh label create freshness --color FBCA04 --description "Rules or links need updating" 2>/dev/null || true
+          issue=$(gh issue list --label freshness --state open --json number --jq '.[0].number')
+          if [ "$STATUS" = "0" ]; then
+            if [ -n "$issue" ]; then
+              gh issue comment "$issue" --body-file report.md
+              gh issue close "$issue" --comment "All rule amounts are current and every link works."
+            fi
+          elif [ -n "$issue" ]; then
+            gh issue comment "$issue" --body-file report.md
+          else
+            title="Rules or links need updating"
+            [ "$STATUS" = "2" ] && title="New rule amounts due soon"
+            gh issue create --title "$title" --label freshness --body-file report.md
+          fi
+      - name: Fail the run when something is overdue or broken
+        if: steps.check.outputs.status == '1'
+        run: exit 1
