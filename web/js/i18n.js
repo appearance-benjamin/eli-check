@@ -3,7 +3,6 @@
 const UI = {
   en: {
     title: "See what you're eligible for",
-    heroEyebrow: "For students in Maastricht — and everyone in the Netherlands",
     heroTitleA: "Money tight? ",
     heroTitleB: "There's help for that.",
     heroLead: "Allowances, grants and local support exist to help you make ends meet, yet many people who qualify never apply. Answer a few simple questions and see what you're likely eligible for.",
@@ -79,7 +78,6 @@ const UI = {
   },
   nl: {
     title: "Zie waar je recht op hebt",
-    heroEyebrow: "Voor studenten in Maastricht — en iedereen in Nederland",
     heroTitleA: "Krap bij kas? ",
     heroTitleB: "Daar is hulp voor.",
     heroLead: "Toeslagen, beurzen en lokale regelingen zijn er om je te helpen rondkomen, maar veel mensen die er recht op hebben vragen ze nooit aan. Beantwoord een paar simpele vragen en zie waar je waarschijnlijk recht op hebt.",

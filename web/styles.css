@@ -256,7 +256,6 @@ button { font: inherit; color: inherit; }
   letter-spacing: -0.015em;
 }
 .hero-actions { margin-top: 34px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-.hero-meta { margin-top: 18px; font-size: 14px; color: var(--text-3); }
 
 .paths {
   display: grid;

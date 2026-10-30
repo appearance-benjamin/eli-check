@@ -167,14 +167,13 @@ function renderHome() {
   mount(`
     <div class="home-hero">
       <section class="hero">
-        <p class="eyebrow">${t("heroEyebrow")}</p>
+        <p class="eyebrow">${t("heroMeta")}</p>
         <h1>${t("heroTitleA")}<br><span class="bloom-text">${t("heroTitleB")}</span></h1>
         <p class="lead">${t("heroLead")}</p>
         <div class="hero-actions">
           <button type="button" class="btn btn-primary btn-large" data-action="start">${t("getStarted")}</button>
           <button type="button" class="btn btn-link" data-action="how">${t("howItWorks")} ${chevron}</button>
         </div>
-        <p class="hero-meta">${t("heroMeta")}</p>
       </section>
       <div class="scene">${SKYLINE}</div>
     </div>
