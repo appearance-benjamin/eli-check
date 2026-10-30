@@ -435,6 +435,7 @@ export const STATIC_TIPS = [
 export const HELP = [
   {
     when: () => true,
+    icon: "people",
     title: { en: "Free financial coach", nl: "Gratis financieel coach" },
     what: {
       en: "Confidential help with budgeting, forms and debts from Sociale Zaken — email financialcoach@maastricht.nl.",
@@ -444,6 +445,7 @@ export const HELP = [
   },
   {
     when: () => true,
+    icon: "sparkle",
     title: { en: "BerekenJeRecht", nl: "BerekenJeRecht" },
     what: {
       en: "The municipality's own detailed calculator for all national and local schemes.",
@@ -453,6 +455,7 @@ export const HELP = [
   },
   {
     when: isStudent,
+    icon: "shield",
     title: { en: "Studentenrechtsbureau Maastricht", nl: "Studentenrechtsbureau Maastricht" },
     what: {
       en: "Free legal advice for students — for example about your landlord, employer or deposit.",
@@ -462,6 +465,7 @@ export const HELP = [
   },
   {
     when: () => true,
+    icon: "home",
     title: { en: "Behind on rent or bills?", nl: "Achter met huur of rekeningen?" },
     what: {
       en: "Team Vroegsignalering helps early, before payment arrears turn into debts.",
@@ -475,6 +479,7 @@ export const HELP = [
 export const CALL = [
   {
     when: () => true,
+    icon: "receipt",
     name: { en: "Belastingdienst — allowances and tax", nl: "Belastingdienst — toeslagen en belasting" },
     what: { en: "Questions about healthcare, rent and child allowances, or your tax return.", nl: "Vragen over zorg-, huur- en kindtoeslagen, of je aangifte." },
     number: "0800 0543",
@@ -484,6 +489,7 @@ export const CALL = [
   },
   {
     when: isStudent,
+    icon: "cap",
     name: { en: "DUO — student finance", nl: "DUO — studiefinanciering" },
     what: { en: "Questions about your grant, loan or student travel product.", nl: "Vragen over je beurs, lening of studentenreisproduct." },
     number: "050 599 7755",
@@ -494,6 +500,7 @@ export const CALL = [
   {
     local: true,
     when: () => true,
+    icon: "city",
     name: { en: "Gemeente Maastricht and Sociale Zaken", nl: "Gemeente Maastricht en Sociale Zaken" },
     what: { en: "Social assistance, the income supplement, special assistance and the city's other schemes.", nl: "Bijstand, de inkomenstoeslag, bijzondere bijstand en de andere regelingen van de gemeente." },
     number: "14 043",
@@ -504,6 +511,7 @@ export const CALL = [
   {
     local: true,
     when: () => true,
+    icon: "home",
     name: { en: "BsGW — municipal tax waiver", nl: "BsGW — kwijtschelding" },
     what: { en: "Ask for the waiver form for waste and sewage charges.", nl: "Vraag het formulier voor kwijtschelding van afvalstoffen- en rioolheffing aan." },
     number: "088 842 0420",
@@ -512,6 +520,7 @@ export const CALL = [
   },
   {
     when: () => true,
+    icon: "wallet",
     name: { en: "Geldfit — money worries", nl: "Geldfit — geldzorgen" },
     what: { en: "Free, anonymous help when bills or debts pile up. They connect you with local help.", nl: "Gratis en anonieme hulp als rekeningen of schulden zich opstapelen. Ze brengen je in contact met hulp in de buurt." },
     number: "0800 8115",
@@ -520,6 +529,7 @@ export const CALL = [
   },
   {
     when: () => true,
+    icon: "shield",
     name: { en: "Juridisch Loket — legal advice", nl: "Juridisch Loket — juridisch advies" },
     what: { en: "Free legal advice, for example when an allowance is refused or must be paid back.", nl: "Gratis juridisch advies, bijvoorbeeld als een toeslag wordt geweigerd of terugbetaald moet worden." },
     number: "0800 8020",

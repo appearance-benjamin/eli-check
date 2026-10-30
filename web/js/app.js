@@ -551,7 +551,7 @@ function helpHtml(items = HELP.filter((h) => h.show(answers))) {
       ${items
         .map(
           (h) => `<a class="not-item help-item" href="${L(h.link)}" target="_blank" rel="noopener noreferrer">
-            <div class="card-icon">${icon("people")}</div>
+            <div class="card-icon tile">${icon(h.icon)}</div>
             <div><strong>${L(h.title)} ${external}</strong><span>${L(h.what)}</span></div>
           </a>`,
         )
@@ -569,7 +569,7 @@ function callHtml(items = CALL.filter((c) => c.show(answers))) {
       ${items
         .map(
           (c) => `<div class="not-item call-item">
-            <div class="card-icon">${icon("info")}</div>
+            <div class="card-icon tile">${icon(c.icon)}</div>
             <div class="call-body">
               <strong>${L(c.name)}</strong><span>${L(c.what)}</span>
               <span class="call-meta">${L(c.hours)}${c.abroad ? ` · ${t("fromAbroad")} <a href="tel:${c.abroad.replace(/\s/g, "")}">${c.abroad}</a>` : ""} · <a href="${L(c.link)}" target="_blank" rel="noopener noreferrer">${t("website")} ${external}</a></span>
