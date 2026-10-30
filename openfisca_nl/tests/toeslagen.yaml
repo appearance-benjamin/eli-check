@@ -122,6 +122,20 @@
     huurtoeslag_ongeafrond: 295.68
     huurtoeslag: 295
 
+- name: Huurtoeslag rounding, rent 257.52 minus basishuur 202.52 is exactly 55 (float32 gives 54.99998)
+  period: 2026-10
+  input:
+    personen:
+      a:
+        leeftijd: 30
+    huishoudens:
+      h:
+        partners: [a]
+        huur_per_maand: 257.52
+        zelfstandige_woonruimte: true
+  output:
+    huurtoeslag: 55
+
 - name: HT-2 huurtoeslag, partners 30 and 27 with a child of 2, rent 1,200, income 34,000
   period: 2026-01
   absolute_error_margin: 0.01

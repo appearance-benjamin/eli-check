@@ -4,11 +4,10 @@ Not modelled: other adult co-residents (medebewoners) besides partner and childr
 care-group housing and pre-1997 student rooms that are exceptions to the self-contained rule.
 """
 
-import numpy
-
 from openfisca_core.model_api import MONTH, Variable, max_, min_, not_, where
 
 from openfisca_nl.entities import Huishouden
+from openfisca_nl.helpers import hele_euros_omlaag
 
 
 class huurtoeslag_voorwaarde_leeftijd(Variable):
@@ -152,6 +151,6 @@ class huurtoeslag(Variable):
             * huishouden("huurtoeslag_voorwaarde_huur", period)
             * huishouden("huurtoeslag_voorwaarde_vermogen", period)
         )
-        maand = numpy.floor(huishouden("huurtoeslag_ongeafrond", period) + 1e-9)
+        maand = hele_euros_omlaag(huishouden("huurtoeslag_ongeafrond", period))
         minimum = parameters(period).algemeen.toeslagen_minimum_jaarbedrag
         return recht * where(maand * 12 >= minimum, maand, 0)
