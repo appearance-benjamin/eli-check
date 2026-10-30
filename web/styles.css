@@ -217,7 +217,14 @@ button { font: inherit; color: inherit; }
 
 .home { max-width: 1024px; margin: 0 auto; padding: 0 22px; }
 
-.hero { text-align: center; padding: clamp(56px, 11vh, 120px) 0 40px; }
+.hero {
+  position: relative;
+  z-index: 1;
+  max-width: 1024px;
+  margin: 0 auto;
+  text-align: center;
+  padding: clamp(48px, 9vh, 104px) 22px 0;
+}
 .eyebrow {
   font-size: 15px;
   font-weight: 600;
@@ -744,6 +751,122 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
   from { background-position: 50% 50%, 50% 50%; }
   to { background-position: 350% 50%, 350% 50%; }
 }
+/* The home page has its own sky. */
+.aurora { transition: opacity 0.6s var(--ease); }
+body:has(.home-hero) .aurora { opacity: 0; }
+
+/* ---------- Home header: Maastricht along the Maas (js/skyline.js) ---------- */
+
+:root {
+  --sk-s1: #f8f6fd;
+  --sk-s2: #f3ebfb;
+  --sk-s3: #ffe4d6;
+  --sk-sun: #ffb48a;
+  --sk-cloud: #ffffff;
+  --sk-far: #e9e0f6;
+  --sk-back: #d8cdec;
+  --sk-mid: #b3a6d6;
+  --sk-jan: #e0664a;
+  --sk-jan-dark: #b44a39;
+  --sk-tree: #a2bdad;
+  --sk-win: #c9bfe6;
+  --sk-win-off: #c9bfe6;
+  --sk-w1: #d9d6f2;
+  --sk-w2: #efedfa;
+  --sk-under: #a296cc;
+  --sk-bridge: #8b7fbd;
+  --sk-parapet: #9f94cb;
+  --sk-lamp: #6d62a1;
+  --sk-lantern: #6d62a1;
+  --sk-shine: #ffffff;
+  --sk-glow: transparent;
+  --sk-rider: #463e6e;
+  --sk-bikelight: transparent;
+}
+:root[data-theme="dark"] {
+  --sk-s1: #020208;
+  --sk-s2: #0a0d2b;
+  --sk-s3: #2b2052;
+  --sk-moon: #f3efe2;
+  --sk-far: #15173a;
+  --sk-back: #10122e;
+  --sk-mid: #0b0d25;
+  --sk-jan: #8f3527;
+  --sk-jan-dark: #5a1f18;
+  --sk-tree: #0a1222;
+  --sk-win: #ffc964;
+  --sk-win-off: #0b0d25;
+  --sk-w1: #171a44;
+  --sk-w2: #020208;
+  --sk-under: #04050e;
+  --sk-bridge: #0b0c22;
+  --sk-parapet: #17193c;
+  --sk-lamp: #1f2142;
+  --sk-lantern: #ffd98a;
+  --sk-shine: #8e8bc4;
+  --sk-glow: #ffcf6e;
+  --sk-rider: #000000;
+  --sk-bikelight: #fff1b8;
+}
+
+.home-hero { background: linear-gradient(to bottom, transparent, var(--sk-s1) 85%); }
+.scene { margin-top: clamp(-96px, -5vw, -24px); }
+.scene svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 210px;
+  max-height: 520px;
+}
+.scene svg * { transition: fill 0.6s var(--ease), stroke 0.6s var(--ease); }
+
+.sk-s1 { stop-color: var(--sk-s1); }
+.sk-s2 { stop-color: var(--sk-s2); }
+.sk-s3 { stop-color: var(--sk-s3); }
+.sk-w1 { stop-color: var(--sk-w1); }
+.sk-w2 { stop-color: var(--sk-w2); }
+.sk-u1 { stop-color: var(--sk-under); }
+.sk-halo { stop-color: var(--sk-glow); }
+.sk-fade { stop-color: var(--bg); }
+.sk-sun { fill: var(--sk-sun); }
+.sk-sun-stop { stop-color: var(--sk-sun); }
+.sk-moon { fill: var(--sk-moon); }
+.sk-moon-stop { stop-color: var(--sk-moon); }
+.sk-star { fill: #fff; }
+.sk-cloud { fill: var(--sk-cloud); opacity: 0.85; }
+.sk-far { fill: var(--sk-far); }
+.sk-back { fill: var(--sk-back); }
+.sk-mid { fill: var(--sk-mid); }
+.sk-jan { fill: var(--sk-jan); }
+.sk-jan-dark { fill: var(--sk-jan-dark); }
+.sk-tree { fill: var(--sk-tree); }
+.sk-win { fill: var(--sk-win); }
+.sk-win-off { fill: var(--sk-win-off); }
+.sk-bridge { fill: var(--sk-bridge); }
+.sk-reflect { opacity: 0.3; }
+.sk-parapet { fill: var(--sk-parapet); }
+.sk-ring { fill: none; stroke: var(--sk-parapet); stroke-width: 3; }
+.sk-lamp { fill: var(--sk-lamp); }
+.sk-lantern { fill: var(--sk-lantern); }
+.sk-shine { fill: none; stroke: var(--sk-shine); stroke-width: 1.5; stroke-linecap: round; }
+.sk-streak { fill: none; stroke: var(--sk-glow); stroke-width: 2; stroke-linecap: round; opacity: 0.55; }
+.sk-rider { fill: none; stroke: var(--sk-rider); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.sk-rider .sk-head { fill: var(--sk-rider); stroke: none; }
+.sk-rider .sk-bikelight { fill: var(--sk-bikelight); stroke: none; }
+
+.sk-night { display: none; }
+:root[data-theme="dark"] .sk-night { display: inline; }
+:root[data-theme="dark"] .sk-day { display: none; }
+
+/* Slow, calm motion: cyclists crossing the bridge, drifting clouds, light on the water. */
+.sk-ride-a { transform: translateX(560px); animation: sk-ride 52s linear -18s infinite; }
+.sk-ride-b { transform: translateX(1040px); animation: sk-ride-back 70s linear -40s infinite; }
+.sk-drift { animation: sk-drift 40s ease-in-out infinite alternate; }
+.sk-twinkle, .sk-shine path { animation: sk-twinkle 6s ease-in-out infinite; }
+@keyframes sk-ride { from { transform: translateX(-80px); } to { transform: translateX(1680px); } }
+@keyframes sk-ride-back { from { transform: translateX(1680px); } to { transform: translateX(-80px); } }
+@keyframes sk-drift { from { transform: translateX(-30px); } to { transform: translateX(30px); } }
+@keyframes sk-twinkle { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.2; } }
 
 /* ---------- Motion ---------- */
 
@@ -760,6 +883,7 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
   html { scroll-behavior: auto; }
   /* An infinite animation at 0.01ms would flicker; keep the aurora still instead. */
   .aurora::after { animation: none !important; }
+  .scene * { animation: none !important; }
 }
 
 /* ---------- Responsive ---------- */
@@ -776,7 +900,7 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 }
 
 @media print {
-  .backdrop, .topbar, .footer, .results-actions, .card-actions, .give { display: none !important; }
+  .backdrop, .topbar, .footer, .results-actions, .card-actions, .give, .scene { display: none !important; }
   body { background: #fff; color: #000; }
   .card { box-shadow: none; break-inside: avoid; }
 }

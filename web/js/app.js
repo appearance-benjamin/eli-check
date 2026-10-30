@@ -3,6 +3,7 @@ import { t, L, getLang, setLang, money, number } from "./i18n.js";
 import { SCHEMES, STATIC_TIPS, HELP, CAUSE, CONDITION_TEXT, conditionPrefix } from "./benefits.js";
 import { calculate } from "./api.js";
 import { icon, chevron, check, external } from "./icons.js";
+import { SKYLINE } from "./skyline.js";
 
 const app = document.getElementById("app");
 const progress = document.querySelector(".progress");
@@ -164,7 +165,7 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e)
 function renderHome() {
   setProgress(null);
   mount(`
-    <div class="home">
+    <div class="home-hero">
       <section class="hero">
         <p class="eyebrow">${t("heroEyebrow")}</p>
         <h1>${t("heroTitleA")}<span class="bloom-text">${t("heroTitleB")}</span></h1>
@@ -175,7 +176,10 @@ function renderHome() {
         </div>
         <p class="hero-meta">${t("heroMeta")}</p>
       </section>
+      <div class="scene">${SKYLINE}</div>
+    </div>
 
+    <div class="home">
       <section class="paths">
         <button type="button" class="path path-student" data-action="student">
           <span class="path-icon">${icon("student")}</span>
