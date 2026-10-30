@@ -218,7 +218,6 @@ function renderHome() {
       <section class="closing">
         <h2>${t("closingTitleA")}<span class="bloom-text">${t("closingTitleB")}</span></h2>
         <p>${t("closingText")}</p>
-        <button type="button" class="btn btn-primary btn-large" data-action="start">${t("getStarted")}</button>
       </section>
     </div>`);
 }

@@ -360,7 +360,7 @@ button { font: inherit; color: inherit; }
 /* The last word on the homepage. */
 .closing { text-align: center; padding: 16px 0 104px; }
 .closing h2 { font-size: clamp(32px, 5vw, 52px); letter-spacing: -0.03em; line-height: 1.08; }
-.closing p { max-width: 560px; margin: 16px auto 28px; color: var(--text-2); font-size: 19px; line-height: 1.4; }
+.closing p { max-width: 560px; margin: 16px auto 0; color: var(--text-2); font-size: 19px; line-height: 1.4; }
 
 .home-contacts { padding: 8px 0 32px; }
 .home-contacts .group:first-child { margin-top: 0; }
