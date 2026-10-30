@@ -364,6 +364,7 @@ button { font: inherit; color: inherit; }
 
 .home-contacts { padding: 8px 0 32px; }
 .home-contacts .group:first-child { margin-top: 0; }
+.home-contacts .group-head { justify-content: center; text-align: center; }
 .home-contacts .group-head h2 { font-size: clamp(28px, 4vw, 40px); }
 .home-contacts .not-list { border: 0; box-shadow: var(--shadow); }
 .home-contacts .not-item { padding: 20px 28px; }
