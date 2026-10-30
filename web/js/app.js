@@ -208,6 +208,11 @@ function renderHome() {
           <li><strong>${t("step3Title")}</strong><span>${t("step3Text")}</span></li>
         </ol>
       </section>
+
+      <div class="home-contacts">
+        ${callHtml(CALL)}
+        ${helpHtml(HELP)}
+      </div>
     </div>`);
 }
 
@@ -536,8 +541,8 @@ function notNowHtml(items) {
   </section>`;
 }
 
-function helpHtml() {
-  const items = HELP.filter((h) => h.show(answers));
+/** On the homepage nobody has answered yet, so every entry is shown. */
+function helpHtml(items = HELP.filter((h) => h.show(answers))) {
   if (!items.length) return "";
   return `<section class="group">
     <div class="group-head"><h2>${t("helpTitle")}</h2></div>
@@ -555,8 +560,7 @@ function helpHtml() {
 }
 
 /** Offices to call, with tap-to-call numbers. */
-function callHtml() {
-  const items = CALL.filter((c) => c.show(answers));
+function callHtml(items = CALL.filter((c) => c.show(answers))) {
   if (!items.length) return "";
   return `<section class="group">
     <div class="group-head"><h2>${t("callTitle")}</h2></div>
