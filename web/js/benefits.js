@@ -30,6 +30,23 @@ export const LINKS = {
   financialCoach: `${SZMH}/gratis-hulp-bij-geldzaken`,
   berekenJeRecht: `${SZMH}/bereken-je-recht`,
   huurteam: "https://huurteam-zuidlimburg.nl/",
+  tooGoodToGo: { en: "https://www.toogoodtogo.com/en", nl: "https://www.toogoodtogo.com/nl" },
+  maastrichtMarket: {
+    en: "https://www.visitmaastricht.com/en/doing/shopping/shopping-at-the-market",
+    nl: "https://www.visitmaastricht.com/nl/doen/shoppen/shoppen-op-de-markt",
+  },
+  kringloopZuid: "https://www.kringloopzuid.nl/",
+  nibudStudent: "https://watkoststuderen.nibud.nl/",
+  voedselbank: "https://voedselbankmaastricht.nl/",
+  belastingTelefoon: {
+    en: "https://www.belastingdienst.nl/wps/wcm/connect/bldcontenten/standaard_functies/individuals/contact/calling/tax_information_line_for_residents",
+    nl: "https://www.belastingdienst.nl/wps/wcm/connect/nl/contact-met-dienst-toeslagen/content/bellen",
+  },
+  duoContact: { en: "https://duo.nl/particulier/contact-en/phone-us.jsp", nl: "https://www.rijksoverheid.nl/contact/contactgids/dienst-uitvoering-onderwijs-duo-studenten-en-scholieren" },
+  szmhContact: `${SZMH}/contact`,
+  bsgwContact: { en: "https://bsgw.nl/en/contact", nl: "https://bsgw.nl/contact" },
+  geldfit: "https://www.geldfit.nl/",
+  juridischLoket: "https://www.juridischloket.nl/",
   studentenrechtshulp: { en: "https://studentenrechtshulp.nl/en/", nl: "https://studentenrechtshulp.nl/" },
   umStudentSupport: "https://www.maastrichtuniversity.nl/study/admission-enrolment/financing-your-studies/financial-support-study-delays-um-student-support",
   umFunds: { en: "https://www.maastrichtuniversity.nl/funds-students", nl: "https://www.maastrichtuniversity.nl/nl/fondsen-voor-studenten" },
@@ -453,6 +470,120 @@ export const HELP = [
     link: LINKS.maastrichtVroegsignalering,
   },
 ].map((h) => ({ ...h, show: (a) => inMaastricht(a) && h.when(a) }));
+
+/** Offices to call, checked on their own contact pages (October 2026). `local` ones are Maastricht-only. */
+export const CALL = [
+  {
+    when: () => true,
+    name: { en: "Belastingdienst — allowances and tax", nl: "Belastingdienst — toeslagen en belasting" },
+    what: { en: "Questions about healthcare, rent and child allowances, or your tax return.", nl: "Vragen over zorg-, huur- en kindtoeslagen, of je aangifte." },
+    number: "0800 0543",
+    hours: { en: "Mon–Thu 8:00–20:00, Fri 8:00–17:00 · free", nl: "ma–do 8.00–20.00, vr 8.00–17.00 · gratis" },
+    abroad: "+31 555 385 385",
+    link: LINKS.belastingTelefoon,
+  },
+  {
+    when: isStudent,
+    name: { en: "DUO — student finance", nl: "DUO — studiefinanciering" },
+    what: { en: "Questions about your grant, loan or student travel product.", nl: "Vragen over je beurs, lening of studentenreisproduct." },
+    number: "050 599 7755",
+    hours: { en: "Weekdays 9:00–17:00", nl: "Werkdagen 9.00–17.00" },
+    abroad: "+31 50 599 7755",
+    link: LINKS.duoContact,
+  },
+  {
+    local: true,
+    when: () => true,
+    name: { en: "Gemeente Maastricht and Sociale Zaken", nl: "Gemeente Maastricht en Sociale Zaken" },
+    what: { en: "Social assistance, the income supplement, special assistance and the city's other schemes.", nl: "Bijstand, de inkomenstoeslag, bijzondere bijstand en de andere regelingen van de gemeente." },
+    number: "14 043",
+    hours: { en: "Weekdays 8:30–16:30", nl: "Werkdagen 8.30–16.30" },
+    abroad: "+31 43 350 4040",
+    link: LINKS.szmhContact,
+  },
+  {
+    local: true,
+    when: () => true,
+    name: { en: "BsGW — municipal tax waiver", nl: "BsGW — kwijtschelding" },
+    what: { en: "Ask for the waiver form for waste and sewage charges.", nl: "Vraag het formulier voor kwijtschelding van afvalstoffen- en rioolheffing aan." },
+    number: "088 842 0420",
+    hours: { en: "Weekdays 9:00–17:00", nl: "Werkdagen 9.00–17.00" },
+    link: LINKS.bsgwContact,
+  },
+  {
+    when: () => true,
+    name: { en: "Geldfit — money worries", nl: "Geldfit — geldzorgen" },
+    what: { en: "Free, anonymous help when bills or debts pile up. They connect you with local help.", nl: "Gratis en anonieme hulp als rekeningen of schulden zich opstapelen. Ze brengen je in contact met hulp in de buurt." },
+    number: "0800 8115",
+    hours: { en: "Weekdays 9:00–21:00 · free", nl: "Werkdagen 9.00–21.00 · gratis" },
+    link: LINKS.geldfit,
+  },
+  {
+    when: () => true,
+    name: { en: "Juridisch Loket — legal advice", nl: "Juridisch Loket — juridisch advies" },
+    what: { en: "Free legal advice, for example when an allowance is refused or must be paid back.", nl: "Gratis juridisch advies, bijvoorbeeld als een toeslag wordt geweigerd of terugbetaald moet worden." },
+    number: "0800 8020",
+    hours: { en: "Weekdays 9:00–17:00 · free", nl: "Werkdagen 9.00–17.00 · gratis" },
+    link: LINKS.juridischLoket,
+  },
+].map((c) => ({ ...c, tel: c.number.replace(/\s/g, ""), show: (a) => (!c.local || inMaastricht(a)) && c.when(a) }));
+
+/** Everyday ways to spend less: food, furniture, rent and budgeting. `local` ones are Maastricht-only. */
+export const SAVE = [
+  {
+    icon: "wallet",
+    when: () => true,
+    title: { en: "Too Good To Go", nl: "Too Good To Go" },
+    what: {
+      en: "Surprise bags of food that shops, bakeries and restaurants would otherwise throw away, for about a third of the price.",
+      nl: "Verrassingspakketten met eten dat winkels, bakkers en restaurants anders weggooien, voor ongeveer een derde van de prijs.",
+    },
+    link: LINKS.tooGoodToGo,
+  },
+  {
+    icon: "city",
+    local: true,
+    when: () => true,
+    title: { en: "The market on the Markt", nl: "De markt op de Markt" },
+    what: {
+      en: "Fruit, vegetables, bread and cheese every Wednesday and Friday from 9:00 to 15:00, often cheaper than the supermarket.",
+      nl: "Groente, fruit, brood en kaas elke woensdag en vrijdag van 9.00 tot 15.00 uur, vaak goedkoper dan in de supermarkt.",
+    },
+    link: LINKS.maastrichtMarket,
+  },
+  {
+    icon: "home",
+    local: true,
+    when: () => true,
+    title: { en: "Kringloop Zuid", nl: "Kringloop Zuid" },
+    what: {
+      en: "A big second-hand store at Watermolen 52 with furniture, kitchenware, lamps, clothes and bikes.",
+      nl: "Een grote kringloopwinkel aan de Watermolen 52 met meubels, keukenspullen, lampen, kleding en fietsen.",
+    },
+    link: LINKS.kringloopZuid,
+  },
+  {
+    icon: "receipt",
+    when: isStudent,
+    title: { en: "Plan your student budget", nl: "Maak je studentenbegroting" },
+    what: {
+      en: "Nibud's free tool shows what studying costs per month and where you can save.",
+      nl: "De gratis tool van het Nibud laat zien wat studeren per maand kost en waar je kunt besparen.",
+    },
+    link: LINKS.nibudStudent,
+  },
+  {
+    icon: "heart",
+    local: true,
+    when: () => true,
+    title: { en: "Voedselbank Maastricht", nl: "Voedselbank Maastricht" },
+    what: {
+      en: "If your income doesn't cover your living costs, the food bank gives a free food package every week.",
+      nl: "Is je inkomen te laag voor je vaste lasten? Dan geeft de voedselbank elke week een gratis voedselpakket.",
+    },
+    link: LINKS.voedselbank,
+  },
+].map((s) => ({ ...s, show: (a) => (!s.local || inMaastricht(a)) && s.when(a) }));
 
 /**
  * The "pay it forward" cause at the end of the results: master's scholarships for students from

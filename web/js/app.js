@@ -1,6 +1,6 @@
 import { QUESTIONS, CHILD_BANDS, visibleQuestions } from "./questions.js";
 import { t, L, getLang, setLang, money, number } from "./i18n.js";
-import { SCHEMES, STATIC_TIPS, HELP, CAUSE, CONDITION_TEXT, conditionPrefix } from "./benefits.js";
+import { SCHEMES, STATIC_TIPS, HELP, CALL, SAVE, CAUSE, CONDITION_TEXT, conditionPrefix } from "./benefits.js";
 import { calculate } from "./api.js";
 import { icon, chevron, check, external } from "./icons.js";
 import { SKYLINE } from "./skyline.js";
@@ -554,6 +554,48 @@ function helpHtml() {
   </section>`;
 }
 
+/** Offices to call, with tap-to-call numbers. */
+function callHtml() {
+  const items = CALL.filter((c) => c.show(answers));
+  if (!items.length) return "";
+  return `<section class="group">
+    <div class="group-head"><h2>${t("callTitle")}</h2></div>
+    <div class="not-list">
+      ${items
+        .map(
+          (c) => `<div class="not-item call-item">
+            <div class="card-icon">${icon("info")}</div>
+            <div class="call-body">
+              <strong>${L(c.name)}</strong><span>${L(c.what)}</span>
+              <span class="call-meta">${L(c.hours)}${c.abroad ? ` · ${t("fromAbroad")} <a href="tel:${c.abroad.replace(/\s/g, "")}">${c.abroad}</a>` : ""} · <a href="${L(c.link)}" target="_blank" rel="noopener noreferrer">${t("website")} ${external}</a></span>
+            </div>
+            <a class="call-number" href="tel:${c.tel}">${c.number}</a>
+          </div>`,
+        )
+        .join("")}
+    </div>
+  </section>`;
+}
+
+/** Everyday savings: groceries, second-hand, budgeting. */
+function saveHtml() {
+  const items = SAVE.filter((s) => s.show(answers));
+  if (!items.length) return "";
+  return `<section class="group">
+    <div class="group-head"><h2>${t("saveTitle")}</h2></div>
+    <div class="not-list help-list">
+      ${items
+        .map(
+          (s) => `<a class="not-item help-item" href="${L(s.link)}" target="_blank" rel="noopener noreferrer">
+            <div class="card-icon">${icon(s.icon)}</div>
+            <div><strong>${L(s.title)} ${external}</strong><span>${L(s.what)}</span></div>
+          </a>`,
+        )
+        .join("")}
+    </div>
+  </section>`;
+}
+
 /** Pay it forward; people with monthly support also see what they'd keep after giving. */
 function giveHtml(total) {
   const amount = money(CAUSE.monthly);
@@ -629,6 +671,8 @@ async function renderResults() {
       ${groupHtml(t("check"), worth, "check")}
       ${notNowHtml(notNow)}
       ${helpHtml()}
+      ${callHtml()}
+      ${saveHtml()}
       <p class="disclaimer">${t("disclaimer")}</p>
       <div class="results-actions">
         <button type="button" class="btn btn-secondary" data-action="review">${t("changeAnswers")}</button>

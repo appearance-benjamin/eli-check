@@ -624,6 +624,26 @@ button { font: inherit; color: inherit; }
 a.help-item { color: inherit; text-decoration: none; transition: background 0.15s; }
 a.help-item:hover { background: var(--surface-2); text-decoration: none; }
 a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
+.call-body { flex: 1; min-width: 0; }
+.call-body > span { display: block; }
+.not-item .call-meta { font-size: 13px; margin-top: 4px; color: var(--text-3, var(--text-2)); }
+.not-item .call-meta a { font-size: 13px; white-space: nowrap; }
+.not-item a.call-number {
+  align-self: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--good-tint);
+  color: var(--good);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+}
+.not-item a.call-number:hover { text-decoration: none; filter: brightness(1.1); }
+@media (max-width: 560px) {
+  .call-item { flex-wrap: wrap; }
+  .call-body { flex-basis: calc(100% - 46px); }
+  .not-item a.call-number { margin-left: 46px; align-self: flex-start; }
+}
 
 .not-list {
   border-radius: var(--radius-lg);
