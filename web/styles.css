@@ -10,10 +10,11 @@
   --text-3: #86868b;
   --line: #d2d2d7;
   --line-soft: #e8e8ed;
-  --accent: #0071e3;
-  --accent-hover: #0077ed;
-  --accent-tint: rgba(0, 113, 227, 0.07);
-  --accent-ring: rgba(0, 113, 227, 0.18);
+  --accent: #7468ad;
+  --accent-fill: #7468ad;
+  --accent-hover: #665b9e;
+  --accent-tint: rgba(116, 104, 173, 0.08);
+  --accent-ring: rgba(116, 104, 173, 0.2);
   --good: #1a7f37;
   --good-tint: rgba(26, 127, 55, 0.09);
   --warn: #b25e00;
@@ -43,10 +44,11 @@
   --text-3: #86868b;
   --line: #424245;
   --line-soft: #2c2c2e;
-  --accent: #2997ff;
-  --accent-hover: #47a6ff;
-  --accent-tint: rgba(41, 151, 255, 0.12);
-  --accent-ring: rgba(41, 151, 255, 0.28);
+  --accent: #b3a6d6;
+  --accent-fill: #7468ad;
+  --accent-hover: #8276bb;
+  --accent-tint: rgba(179, 166, 214, 0.14);
+  --accent-ring: rgba(179, 166, 214, 0.3);
   --good: #32d74b;
   --good-tint: rgba(50, 215, 75, 0.12);
   --warn: #ffb340;
@@ -145,7 +147,7 @@ button { font: inherit; color: inherit; }
 .progress-bar {
   height: 100%;
   width: 0;
-  background: var(--accent);
+  background: var(--accent-fill);
   transition: width 0.5s var(--ease), opacity 0.3s;
   opacity: 0;
 }
@@ -196,7 +198,7 @@ button { font: inherit; color: inherit; }
 }
 .btn:hover { text-decoration: none; }
 .btn:active { transform: scale(0.98); }
-.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary { background: var(--accent-fill); color: #fff; }
 .btn-primary:hover { background: var(--accent-hover); }
 .btn-primary:disabled { opacity: 0.35; cursor: default; transform: none; }
 .btn-secondary { background: var(--fill); color: var(--text); }
@@ -211,11 +213,6 @@ button { font: inherit; color: inherit; }
 }
 .btn-link:hover { text-decoration: underline; }
 .btn-large { min-height: 56px; padding: 16px 34px; font-size: 18px; }
-/* The home call-to-action and its link in the purple of the bloom text and the skyline. */
-.btn-bloom { background: #7468ad; }
-.btn-bloom:hover { background: #665b9e; }
-.hero .btn-link { color: #7468ad; }
-:root[data-theme="dark"] .hero .btn-link { color: #b3a6d6; }
 
 .chev { width: 9px; height: 15px; flex: none; }
 
@@ -438,7 +435,7 @@ button { font: inherit; color: inherit; }
   transition: background 0.2s, border-color 0.2s;
 }
 .radio svg { width: 13px; height: 13px; color: #fff; opacity: 0; transform: scale(0.6); transition: 0.2s var(--ease); }
-.option[aria-checked="true"] .radio { background: var(--accent); border-color: var(--accent); }
+.option[aria-checked="true"] .radio { background: var(--accent-fill); border-color: var(--accent-fill); }
 .option[aria-checked="true"] .radio svg { opacity: 1; transform: none; }
 
 .field {
@@ -713,80 +710,121 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 .footer a { color: var(--text-2); text-decoration: underline; text-underline-offset: 2px; }
 .footer a:hover { color: var(--text); }
 
-/* ---------- Background ---------- */
-
-.backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-/* Aurora lights in the top-right corner: a plain-CSS port of the "AuroraBackground" component.
-   Stripes over a blue-violet band, blurred, with a slowly sliding copy blended on top. */
-.aurora {
-  --stripes: repeating-linear-gradient(100deg, #fff 0%, #fff 7%, transparent 10%, transparent 12%, #fff 16%);
-  --aurora: repeating-linear-gradient(100deg, #3b82f6 10%, #a5b4fc 15%, #93c5fd 20%, #ddd6fe 25%, #60a5fa 30%);
-  position: absolute;
-  inset: -10px;
-  background-image: var(--stripes), var(--aurora);
-  background-size: 300%, 200%;
-  background-position: 50% 50%, 50% 50%;
-  filter: blur(10px) invert(1);
-  opacity: 0.5;
-  will-change: transform;
-  -webkit-mask-image: radial-gradient(ellipse at 100% 0%, #000 10%, transparent 70%);
-  mask-image: radial-gradient(ellipse at 100% 0%, #000 10%, transparent 70%);
-}
-.aurora::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: var(--stripes), var(--aurora);
-  background-size: 200%, 100%;
-  background-attachment: fixed;
-  mix-blend-mode: difference;
-  animation: aurora 60s linear infinite;
-}
-:root[data-theme="dark"] .aurora {
-  --stripes: repeating-linear-gradient(100deg, #000 0%, #000 7%, transparent 10%, transparent 12%, #000 16%);
-  filter: blur(10px);
-}
-@keyframes aurora {
-  from { background-position: 50% 50%, 50% 50%; }
-  to { background-position: 350% 50%, 350% 50%; }
-}
-/* The home page has its own sky. */
-.aurora { transition: opacity 0.6s var(--ease); }
-body:has(.home-hero) .aurora { opacity: 0; }
-
-/* ---------- Home header: Maastricht silhouette (js/skyline.js) ---------- */
+/* ---------- Home header: Maastricht along the Maas (js/skyline.js) ---------- */
 
 :root {
+  --sk-s1: #f8f6fd;
+  --sk-s2: #f3ebfb;
+  --sk-s3: #ffe4d6;
+  --sk-sun: #ffb48a;
+  --sk-cloud: #ffffff;
+  --sk-far: #e9e0f6;
   --sk-back: #d8cdec;
   --sk-mid: #b3a6d6;
+  --sk-jan: #e0664a;
+  --sk-jan-dark: #b44a39;
+  --sk-tree: #a2bdad;
+  --sk-win: #c9bfe6;
+  --sk-win-off: #c9bfe6;
+  --sk-w1: #d9d6f2;
+  --sk-w2: #efedfa;
+  --sk-under: #a296cc;
   --sk-bridge: #8b7fbd;
+  --sk-parapet: #9f94cb;
+  --sk-lamp: #6d62a1;
+  --sk-lantern: #6d62a1;
+  --sk-shine: #ffffff;
+  --sk-glow: transparent;
 }
 :root[data-theme="dark"] {
-  --sk-back: #15173a;
-  --sk-mid: #10122e;
-  --sk-bridge: #232552;
+  --sk-s1: #020208;
+  --sk-s2: #0a0d2b;
+  --sk-s3: #2b2052;
+  --sk-moon: #f3efe2;
+  --sk-far: #15173a;
+  --sk-back: #10122e;
+  --sk-mid: #0b0d25;
+  --sk-jan: #8f3527;
+  --sk-jan-dark: #5a1f18;
+  --sk-tree: #0a1222;
+  --sk-win: #ffc964;
+  --sk-win-off: #0b0d25;
+  --sk-w1: #171a44;
+  --sk-w2: #020208;
+  --sk-under: #04050e;
+  --sk-bridge: #0b0c22;
+  --sk-parapet: #17193c;
+  --sk-lamp: #1f2142;
+  --sk-lantern: #ffd98a;
+  --sk-shine: #8e8bc4;
+  --sk-glow: #ffcf6e;
 }
 
-.scene { margin-top: clamp(16px, 3vw, 40px); }
+/* Only the heart of the city, around the Sint-Janstoren, at the same size on every screen;
+   on wide screens the edges fade out instead of the panorama stretching across. */
+.scene {
+  max-width: 880px;
+  margin: clamp(-96px, -5vw, -24px) auto 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%);
+  mask-image: linear-gradient(to bottom, transparent, #000 25%);
+}
+@media (min-width: 900px) {
+  .scene {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%), linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to bottom, transparent, #000 25%), linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+    mask-composite: intersect;
+  }
+}
 .scene svg {
   display: block;
   width: 100%;
   height: auto;
-  min-height: 170px;
-  max-height: 420px;
+  aspect-ratio: 2 / 1;
+  min-height: 210px;
 }
-.scene svg * { transition: fill 0.4s var(--ease); }
+.scene svg * { transition: fill 0.6s var(--ease), stroke 0.6s var(--ease); }
+
+.sk-s1 { stop-color: var(--sk-s1); }
+.sk-s2 { stop-color: var(--sk-s2); }
+.sk-s3 { stop-color: var(--sk-s3); }
+.sk-w1 { stop-color: var(--sk-w1); }
+.sk-w2 { stop-color: var(--sk-w2); }
+.sk-u1 { stop-color: var(--sk-under); }
+.sk-halo { stop-color: var(--sk-glow); }
+.sk-fade { stop-color: var(--bg); }
+.sk-sun { fill: var(--sk-sun); }
+.sk-sun-stop { stop-color: var(--sk-sun); }
+.sk-moon { fill: var(--sk-moon); }
+.sk-moon-stop { stop-color: var(--sk-moon); }
+.sk-star { fill: #fff; }
+.sk-cloud { fill: var(--sk-cloud); opacity: 0.85; }
+.sk-far { fill: var(--sk-far); }
 .sk-back { fill: var(--sk-back); }
 .sk-mid { fill: var(--sk-mid); }
+.sk-jan { fill: var(--sk-jan); }
+.sk-jan-dark { fill: var(--sk-jan-dark); }
+.sk-tree { fill: var(--sk-tree); }
+.sk-win { fill: var(--sk-win); }
+.sk-win-off { fill: var(--sk-win-off); }
 .sk-bridge { fill: var(--sk-bridge); }
-.sk-fade { stop-color: var(--bg); }
+.sk-reflect { opacity: 0.3; }
+.sk-parapet { fill: var(--sk-parapet); }
+.sk-ring { fill: none; stroke: var(--sk-parapet); stroke-width: 3; }
+.sk-lamp { fill: var(--sk-lamp); }
+.sk-lantern { fill: var(--sk-lantern); }
+.sk-shine { fill: none; stroke: var(--sk-shine); stroke-width: 1.5; stroke-linecap: round; }
+.sk-streak { fill: none; stroke: var(--sk-glow); stroke-width: 2; stroke-linecap: round; opacity: 0.55; }
+
+.sk-night { display: none; }
+:root[data-theme="dark"] .sk-night { display: inline; }
+:root[data-theme="dark"] .sk-day { display: none; }
+
+/* Slow, calm motion: drifting clouds, light on the water. */
+.sk-drift { animation: sk-drift 40s ease-in-out infinite alternate; }
+.sk-twinkle, .sk-shine path { animation: sk-twinkle 6s ease-in-out infinite; }
+@keyframes sk-drift { from { transform: translateX(-30px); } to { transform: translateX(30px); } }
+@keyframes sk-twinkle { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.2; } }
 
 /* ---------- Motion ---------- */
 
@@ -801,8 +839,7 @@ body:has(.home-hero) .aurora { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   html { scroll-behavior: auto; }
-  /* An infinite animation at 0.01ms would flicker; keep the aurora still instead. */
-  .aurora::after { animation: none !important; }
+  .scene * { animation: none !important; }
 }
 
 /* ---------- Responsive ---------- */
@@ -819,7 +856,7 @@ body:has(.home-hero) .aurora { opacity: 0; }
 }
 
 @media print {
-  .backdrop, .topbar, .footer, .results-actions, .card-actions, .give, .scene { display: none !important; }
+  .topbar, .footer, .results-actions, .card-actions, .give, .scene { display: none !important; }
   body { background: #fff; color: #000; }
   .card { box-shadow: none; break-inside: avoid; }
 }
