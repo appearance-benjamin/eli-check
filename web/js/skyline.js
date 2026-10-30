@@ -4,6 +4,7 @@
 
 const W = 1600;
 const H = 440;
+const TOP = -420; // extra sky above the city: phones show the headline in it
 const BASE = 320; // buildings stop here, behind the bridge
 const WATER = 352; // water line: the bridge piers stand on it
 const DECK = 290; // top of the bridge parapet
@@ -85,15 +86,21 @@ const TREES = [
 ];
 const LAMPS = [200, 600, 1000, 1400];
 
+const BIKE =
+  `<circle cx="-7" cy="-5" r="5"/><circle cx="8" cy="-5" r="5"/>` +
+  `<path d="M-7 -5L-1 -5L-3 -12L-7 -5M-1 -5L5 -12L8 -5M-3 -12H5M5 -12L6 -15M-3 -13L-1 -22L6 -15M-3 -13L2 -9L-1 -5"/>` +
+  `<circle class="sk-head" cx="0" cy="-25.5" r="2.7"/>`;
+const rider = (x) => `<g transform="translate(${x} ${DECK})">${BIKE}</g>`;
+
 const cloud = (x, y, s) =>
   `<g transform="translate(${x} ${y}) scale(${s})"><ellipse rx="56" ry="10"/><circle cx="-20" cy="-8" r="16"/><circle cx="6" cy="-14" r="21"/><circle cx="30" cy="-5" r="13"/></g>`;
 
 function stars() {
   const rnd = random(5);
   let out = "";
-  for (let i = 0; i < 48; i++) {
+  for (let i = 0; i < 140; i++) {
     const x = r1(rnd() * W);
-    const y = r1(8 + rnd() * 200);
+    const y = r1(TOP + 20 + rnd() * (200 - TOP));
     const r = r1(0.6 + rnd() * 1.1);
     const twinkle = i % 3 === 0 ? ` class="sk-twinkle" style="animation-delay:${r1(-rnd() * 5)}s"` : "";
     out += `<circle cx="${x}" cy="${y}" r="${r}"${twinkle}/>`;
@@ -118,6 +125,9 @@ function draw() {
   const rows = [row(0, 488, 11, 238, 268), row(936, 1322, 37, 236, 266), row(1500, W, 41, 240, 266)];
   const houses = rows.map((r) => r.houses).join("");
   const lit = rows.map((r) => r.lit).join("") + LANDMARK_WINDOWS;
+  // Three sets of windows that brighten and dim out of step at night.
+  const litSets = ["", "", ""];
+  lit.split(/(?=M)/).forEach((d, i) => (litSets[i % 3] += d));
   const dark = rows.map((r) => r.dark).join("");
 
   let bridge = `M-10 ${DECK + 8}H${W + 10}V${WATER}H-10Z`;
@@ -127,12 +137,17 @@ function draw() {
     rings += `M${cx - 76} ${WATER}A76 35 0 0 1 ${cx + 76} ${WATER}`;
   }
   const posts = LAMPS.map((x) => `M${x - 1} ${DECK}V258h2v${DECK - 258}z M${x - 5} 250l5-4 5 4z`).join(" ");
-  const lanterns = LAMPS.map((x) => `M${x - 4} 250h8v8h-8z`).join(" ");
-  const streaks = LAMPS.map((x) => [0, 1, 2, 3, 4].map((i) => `M${x - 9 + 2 * i} ${WATER + 6 + i * 7}h${18 - 4 * i}`).join("")).join("");
+  // Each lamp glows on its own beat: the lantern, its halo and its streak on the water together.
+  const lamps = LAMPS.map((x, n) => {
+    const beat = `style="animation-delay:${-n * 1.7}s"`;
+    const streak = [0, 1, 2, 3, 4].map((i) => `M${x - 9 + 2 * i} ${WATER + 6 + i * 7}h${18 - 4 * i}`).join("");
+    return `<path class="sk-lantern" ${beat} d="M${x - 4} 250h8v8h-8z"/>` +
+      `<g class="sk-night sk-lamplight" ${beat}><circle cx="${x}" cy="254" r="26" fill="url(#sk-halo)"/><path class="sk-streak" d="${streak}"/></g>`;
+  }).join("");
 
-  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+  return `<svg viewBox="0 ${TOP} ${W} ${H - TOP}" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
   <defs>
-    <linearGradient id="sk-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="sk-s1"/><stop offset=".6" class="sk-s2"/><stop offset="1" class="sk-s3"/></linearGradient>
+    <linearGradient id="sk-sky" gradientUnits="userSpaceOnUse" x1="0" y1="-160" x2="0" y2="${WATER}"><stop offset="0" class="sk-s1"/><stop offset=".6" class="sk-s2"/><stop offset="1" class="sk-s3"/></linearGradient>
     <linearGradient id="sk-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="sk-w1"/><stop offset="1" class="sk-w2"/></linearGradient>
     <linearGradient id="sk-under" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="sk-u1"/><stop offset="1" class="sk-w1"/></linearGradient>
     <linearGradient id="sk-fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="sk-fade" stop-opacity="0"/><stop offset="1" class="sk-fade"/></linearGradient>
@@ -140,13 +155,13 @@ function draw() {
     <radialGradient id="sk-sunhalo"><stop offset=".4" class="sk-sun-stop" stop-opacity=".45"/><stop offset="1" class="sk-sun-stop" stop-opacity="0"/></radialGradient>
     <radialGradient id="sk-moonhalo"><stop offset=".2" class="sk-moon-stop" stop-opacity=".25"/><stop offset="1" class="sk-moon-stop" stop-opacity="0"/></radialGradient>
   </defs>
-  <rect width="${W}" height="${WATER}" fill="url(#sk-sky)"/>
+  <rect y="${TOP}" width="${W}" height="${WATER - TOP}" fill="url(#sk-sky)"/>
   <g class="sk-day">
-    <circle cx="1150" cy="214" r="120" fill="url(#sk-sunhalo)"/><circle class="sk-sun" cx="1150" cy="214" r="46"/>
+    <circle cx="970" cy="214" r="120" fill="url(#sk-sunhalo)"/><circle class="sk-sun" cx="970" cy="214" r="46"/>
     <g class="sk-cloud sk-drift">${cloud(250, 118, 1)}${cloud(900, 64, 0.8)}${cloud(1450, 104, 1.1)}</g>
   </g>
   <g class="sk-night">
-    <circle cx="1150" cy="118" r="70" fill="url(#sk-moonhalo)"/><circle class="sk-moon" cx="1150" cy="118" r="17"/>
+    <circle cx="970" cy="118" r="70" fill="url(#sk-moonhalo)"/><circle class="sk-moon" cx="970" cy="118" r="17"/>
     <g class="sk-star">${stars()}</g>
   </g>
   <path class="sk-far" d="${HILLS}"/>
@@ -154,20 +169,19 @@ function draw() {
   <path class="sk-mid" d="${houses}${OLV}${SERVAAS}${JAN_NAVE}${BONNEFANTEN}"/>
   <path class="sk-jan" d="${JAN_TOWER}"/>
   <path class="sk-jan-dark" d="${JAN_OPENINGS}"/>
-  <path class="sk-win" d="${lit}"/>
+  <g class="sk-win">${litSets.map((d, i) => `<path d="${d}" style="animation-delay:${-i * 2.3}s"/>`).join("")}</g>
   <path class="sk-win-off" d="${dark}"/>
   <g class="sk-tree">${TREES.map(([cx, cy, r]) => `<circle cx="${cx}" cy="${cy}" r="${r}"/>`).join("")}</g>
   <rect y="${BASE}" width="${W}" height="${H - BASE}" fill="url(#sk-water)"/>
   <rect y="${BASE}" width="${W}" height="${WATER - BASE}" fill="url(#sk-under)"/>
   <use href="#sk-bridge" class="sk-reflect" transform="matrix(1 0 0 -1 0 ${2 * WATER})"/>
   <g class="sk-shine">${shimmer()}</g>
-  <path class="sk-streak sk-night" d="${streaks}"/>
   <path id="sk-bridge" class="sk-bridge" fill-rule="evenodd" d="${bridge}"/>
   <path class="sk-ring" d="${rings}"/>
   <path class="sk-parapet" d="M-10 ${DECK}H${W + 10}V${DECK + 8}H-10Z"/>
   <path class="sk-lamp" d="${posts}"/>
-  <path class="sk-lantern" d="${lanterns}"/>
-  <g class="sk-night">${LAMPS.map((x) => `<circle cx="${x}" cy="254" r="26" fill="url(#sk-halo)"/>`).join("")}</g>
+  ${lamps}
+  <g class="sk-rider"><g class="sk-ride">${rider(0)}</g></g>
   <rect y="400" width="${W}" height="${H - 400}" fill="url(#sk-fade)"/>
 </svg>`;
 }

@@ -718,6 +718,7 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
   --sk-s3: #ffe4d6;
   --sk-sun: #ffb48a;
   --sk-cloud: #ffffff;
+  --sk-rider: #463e6e;
   --sk-far: #e9e0f6;
   --sk-back: #d8cdec;
   --sk-mid: #b3a6d6;
@@ -765,6 +766,10 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 .scene {
   max-width: 880px;
   margin: clamp(-96px, -5vw, -24px) auto 0;
+  aspect-ratio: 20 / 11;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%);
   mask-image: linear-gradient(to bottom, transparent, #000 25%);
 }
@@ -776,12 +781,13 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
     mask-composite: intersect;
   }
 }
+/* The drawing has tall sky for phones; here only its bottom, the city and the river, shows. */
 .scene svg {
   display: block;
+  flex: none;
   width: 100%;
   height: auto;
-  aspect-ratio: 20 / 11;
-  min-height: 230px;
+  aspect-ratio: 800 / 860;
 }
 .scene svg * { transition: fill 0.6s var(--ease), stroke 0.6s var(--ease); }
 
@@ -799,6 +805,8 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 .sk-moon-stop { stop-color: var(--sk-moon); }
 .sk-star { fill: #fff; }
 .sk-cloud { fill: var(--sk-cloud); opacity: 0.85; }
+.sk-rider { display: none; fill: none; stroke: var(--sk-rider); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.sk-rider .sk-head { fill: var(--sk-rider); stroke: none; }
 .sk-far { fill: var(--sk-far); }
 .sk-back { fill: var(--sk-back); }
 .sk-mid { fill: var(--sk-mid); }
@@ -826,9 +834,35 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 .sk-shine path { animation: sk-ripple 6s ease-in-out infinite; }
 @keyframes sk-drift { from { transform: translateX(-30px); } to { transform: translateX(30px); } }
 @keyframes sk-twinkle { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.2; } }
+/* At night the windows and the bridge lamps slowly brighten and dim. */
+:root[data-theme="dark"] .sk-win path,
+:root[data-theme="dark"] .sk-lantern,
+.sk-lamplight { animation: sk-glow 5s ease-in-out infinite; }
+@keyframes sk-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.sk-ride { animation: sk-ride 20s linear infinite; }
+@keyframes sk-ride { from { transform: translateX(520px); } to { transform: translateX(1120px); } }
 @keyframes sk-ripple {
   0%, 100% { opacity: 0.15; transform: translateX(-18px); }
   50% { opacity: 1; transform: translateX(18px); }
+}
+
+/* Phones: the whole first screen is the scene, with the headline in the sky and,
+   by day, cyclists crossing the bridge. */
+@media (max-width: 600px) {
+  .home-hero { position: relative; min-height: max(calc(100svh - 52px), 720px); }
+  .hero { padding-top: 36px; }
+  .scene {
+    position: absolute;
+    inset: 0;
+    max-width: none;
+    margin: 0;
+    aspect-ratio: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .scene svg { height: 100%; aspect-ratio: auto; }
+  .sk-cloud { display: none; }
+  :root:not([data-theme="dark"]) .sk-rider { display: inline; }
 }
 
 /* ---------- Motion ---------- */
