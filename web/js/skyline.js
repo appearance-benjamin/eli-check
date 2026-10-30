@@ -6,7 +6,7 @@ const W = 1600;
 const H = 400;
 const BASE = 320; // buildings stop here, behind the bridge
 const WATER = 352; // water line: the bridge piers stand on it
-const DECK = 290; // top of the bridge parapet, where the cyclists ride
+const DECK = 290; // top of the bridge parapet
 
 // Deterministic pseudo-random numbers, so the houses and stars look the same on every visit.
 function random(seed) {
@@ -88,12 +88,6 @@ const LAMPS = [200, 600, 1000, 1400];
 const cloud = (x, y, s) =>
   `<g transform="translate(${x} ${y}) scale(${s})"><ellipse rx="56" ry="10"/><circle cx="-20" cy="-8" r="16"/><circle cx="6" cy="-14" r="21"/><circle cx="30" cy="-5" r="13"/></g>`;
 
-const BIKE =
-  `<circle cx="-7" cy="-5" r="5"/><circle cx="8" cy="-5" r="5"/>` +
-  `<path d="M-7 -5L-1 -5L-3 -12L-7 -5M-1 -5L5 -12L8 -5M-3 -12H5M5 -12L6 -15M-3 -13L-1 -22L6 -15M-3 -13L2 -9L-1 -5"/>` +
-  `<circle class="sk-head" cx="0" cy="-25.5" r="2.7"/><circle class="sk-bikelight" cx="7" cy="-11" r="1.5"/>`;
-const rider = (x, flip = false) => `<g transform="translate(${x} ${DECK}) scale(${flip ? -0.85 : 0.85} 0.85)">${BIKE}</g>`;
-
 function stars() {
   const rnd = random(5);
   let out = "";
@@ -174,10 +168,6 @@ function draw() {
   <path class="sk-lamp" d="${posts}"/>
   <path class="sk-lantern" d="${lanterns}"/>
   <g class="sk-night">${LAMPS.map((x) => `<circle cx="${x}" cy="254" r="26" fill="url(#sk-halo)"/>`).join("")}</g>
-  <g class="sk-rider">
-    <g class="sk-ride sk-ride-a">${rider(0)}${rider(-30)}</g>
-    <g class="sk-ride sk-ride-b">${rider(0, true)}</g>
-  </g>
   <rect y="360" width="${W}" height="${H - 360}" fill="url(#sk-fade)"/>
 </svg>`;
 }
