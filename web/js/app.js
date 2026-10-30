@@ -58,9 +58,11 @@ function go(hash) {
 
 function route() {
   const [view, id] = location.hash.replace(/^#\/?/, "").split("/");
+  helpLink.toggleAttribute("aria-current", view === "help");
   if (view === "q" && QUESTIONS.some((q) => q.id === id)) return renderQuestion(id);
   if (view === "review") return renderReview();
   if (view === "results") return renderResults();
+  if (view === "help") return renderHelp();
   lastIndex = -1;
   renderHome();
 }
@@ -106,7 +108,10 @@ function setProgress(fraction) {
   progressBar.style.width = `${Math.max(3, fraction * 100)}%`;
 }
 
+const helpLink = document.getElementById("help-link");
+
 function renderChrome() {
+  helpLink.textContent = t("helpLink");
   document.documentElement.lang = getLang();
   document.title = t("title");
   document.querySelectorAll("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === getLang())));
@@ -193,6 +198,14 @@ function renderHome() {
           <p>${t("pathEveryoneText")}</p>
           <span class="path-cta">${t("start")} ${chevron}</span>
         </button>
+        <a class="path path-help" href="#/help">
+          <span class="path-icon">${icon("heart")}</span>
+          <span class="path-help-text">
+            <h2>${t("pathHelpTitle")}</h2>
+            <p>${t("pathHelpText")}</p>
+          </span>
+          <span class="path-cta">${t("pathHelpCta")} ${chevron}</span>
+        </a>
       </section>
 
       <section class="features">
@@ -200,11 +213,6 @@ function renderHome() {
         <div class="feature">${icon("code")}<h3>${t("feat2Title")}</h3><p>${t("feat2Text")}</p></div>
         <div class="feature">${icon("arrow")}<h3>${t("feat3Title")}</h3><p>${t("feat3Text")}</p></div>
       </section>
-
-      <div class="home-contacts">
-        ${callHtml(CALL)}
-        ${helpHtml(HELP)}
-      </div>
 
       <section class="steps" id="how">
         <h2>${t("stepsTitle")}</h2>
@@ -219,6 +227,26 @@ function renderHome() {
         <h2>${t("closingTitleA")}<span class="bloom-text">${t("closingTitleB")}</span></h2>
         <p>${t("closingText")}</p>
       </section>
+    </div>`);
+}
+
+// ---------- help ----------
+
+/** Help, open to everyone without answering anything: who to call, free advice and ways to save. */
+function renderHelp() {
+  setProgress(null);
+  lastIndex = -1;
+  mount(`
+    <div class="help-page">
+      <section class="page-head">
+        <h1>${t("helpPageTitle")}</h1>
+        <p class="lead">${t("helpPageLead")}</p>
+      </section>
+      <div class="contacts">
+        ${callHtml(CALL)}
+        ${helpHtml(HELP)}
+        ${saveHtml(SAVE)}
+      </div>
     </div>`);
 }
 
@@ -588,8 +616,7 @@ function callHtml(items = CALL.filter((c) => c.show(answers))) {
 }
 
 /** Everyday savings: groceries, second-hand, budgeting. */
-function saveHtml() {
-  const items = SAVE.filter((s) => s.show(answers));
+function saveHtml(items = SAVE.filter((s) => s.show(answers))) {
   if (!items.length) return "";
   return `<section class="group">
     <div class="group-head"><h2>${t("saveTitle")}</h2></div>
@@ -597,7 +624,7 @@ function saveHtml() {
       ${items
         .map(
           (s) => `<a class="not-item help-item" href="${L(s.link)}" target="_blank" rel="noopener noreferrer">
-            <div class="card-icon">${icon(s.icon)}</div>
+            <div class="card-icon tile">${icon(s.icon)}</div>
             <div><strong>${L(s.title)} ${external}</strong><span>${L(s.what)}</span></div>
           </a>`,
         )
@@ -698,16 +725,16 @@ async function renderResults() {
 
 // ---------- events ----------
 
-// Home cards: a soft light follows the mouse and the card leans slightly towards it.
+// Home cards and contact lists: a soft light follows the mouse; the cards also lean slightly towards it.
 app.addEventListener("pointermove", (e) => {
-  const card = e.target.closest(".path");
+  const card = e.target.closest(".path, .contacts .not-list");
   if (!card || e.pointerType !== "mouse") return;
   const r = card.getBoundingClientRect();
   const x = (e.clientX - r.left) / r.width;
   const y = (e.clientY - r.top) / r.height;
   card.style.setProperty("--mx", `${x * 100}%`);
   card.style.setProperty("--my", `${y * 100}%`);
-  if (reducedMotion) return;
+  if (reducedMotion || !card.classList.contains("path")) return;
   card.style.setProperty("--rx", `${(0.5 - y) * 6}deg`);
   card.style.setProperty("--ry", `${(x - 0.5) * 6}deg`);
 });

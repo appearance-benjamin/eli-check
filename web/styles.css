@@ -124,6 +124,16 @@ button { font: inherit; color: inherit; }
 .brand:hover { text-decoration: none; }
 
 .topbar-actions { display: flex; align-items: center; gap: 10px; }
+.topbar-link { font-size: 14px; font-weight: 500; color: var(--text-2); padding: 6px 8px; border-radius: 8px; }
+.topbar-link:hover { color: var(--text); text-decoration: none; }
+.topbar-link[aria-current] { color: var(--accent); }
+/* The smallest phones: keep the name on one line next to Help, language and theme. */
+@media (max-width: 360px) {
+  .topbar-inner { padding: 0 12px; }
+  .topbar-actions { gap: 4px; }
+  .topbar-link { padding: 6px 4px; }
+  .brand { white-space: nowrap; font-size: 16px; }
+}
 
 .icon-btn {
   display: grid;
@@ -310,6 +320,23 @@ button { font: inherit; color: inherit; }
 .path .path-icon svg { width: 24px; height: 24px; }
 .path-student .path-icon { background: linear-gradient(135deg, #ff5f8f, #ff9f45); }
 .path-everyone .path-icon { background: linear-gradient(135deg, #5b8cff, #8b5cf6); }
+/* A calm, full-width third card to the Help page, its icon a piece of the header's sky. */
+.path-help {
+  grid-column: 1 / -1;
+  min-height: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: 22px;
+  padding: 26px 32px;
+  color: inherit;
+  --glow: rgba(169, 154, 216, 0.2);
+}
+.path-help:hover { text-decoration: none; }
+.path-help .path-icon { margin: 0; flex: none; color: var(--accent); background: linear-gradient(160deg, var(--sk-s2) 20%, var(--sk-s3)); box-shadow: inset 0 0 0 1px var(--line); }
+.path-help-text { flex: 1; min-width: 0; }
+.path.path-help h2 { font-size: 24px; }
+.path.path-help p { max-width: 60ch; margin-top: 4px; font-size: 16px; }
+.path.path-help .path-cta { margin: 0; padding: 0; flex: none; }
 .path h2 { font-size: 30px; letter-spacing: -0.025em; }
 .path p { color: var(--text-2); font-size: 17px; max-width: 36ch; }
 .path .path-cta {
@@ -362,12 +389,31 @@ button { font: inherit; color: inherit; }
 .closing h2 { font-size: clamp(32px, 5vw, 52px); letter-spacing: -0.03em; line-height: 1.08; }
 .closing p { max-width: 560px; margin: 16px auto 0; color: var(--text-2); font-size: 19px; line-height: 1.4; }
 
-.home-contacts { padding: 8px 0 32px; }
-.home-contacts .group:first-child { margin-top: 0; }
-.home-contacts .group-head { justify-content: center; text-align: center; }
-.home-contacts .group-head h2 { font-size: clamp(28px, 4vw, 40px); }
-.home-contacts .not-list { border: 0; box-shadow: var(--shadow); }
-.home-contacts .not-item { padding: 20px 28px; }
+/* The Help page: who to call, free help and ways to save, for everyone. */
+.help-page { max-width: 980px; margin: 0 auto; padding: 18px 22px 88px; }
+.page-head { text-align: center; padding: clamp(40px, 8vh, 80px) 0 40px; }
+.page-head h1 { font-size: clamp(40px, 7vw, 64px); letter-spacing: -0.035em; line-height: 1.05; }
+.page-head .lead { max-width: 600px; margin: 16px auto 0; color: var(--text-2); font-size: clamp(17px, 2vw, 20px); line-height: 1.4; }
+.contacts .group:first-child { margin-top: 0; }
+.contacts .group-head { justify-content: center; text-align: center; }
+.contacts .group-head h2 { font-size: clamp(28px, 4vw, 40px); }
+.contacts .not-list { position: relative; border: 0; box-shadow: var(--shadow); transition: transform 0.3s var(--ease); }
+/* The same light as the path cards on the homepage, pink and violet in turn. */
+.contacts .not-list::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), var(--glow), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.contacts .not-list:hover { transform: translateY(-3px); }
+.contacts .not-list:hover::after { opacity: 1; }
+.contacts .group:nth-child(odd) .not-list { --glow: rgba(255, 95, 143, 0.14); }
+.contacts .group:nth-child(even) .not-list { --glow: rgba(139, 92, 246, 0.16); }
+.contacts .not-item { padding: 20px 28px; }
 
 /* Icon tiles in the contact lists: a small piece of the header's sky, lavender into sunrise by day and
    deep blue at night, with the icon in the site's purple. */
@@ -669,7 +715,7 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
   .call-item { flex-wrap: wrap; }
   .call-body { flex: 1 1 calc(100% - 64px); }
   .not-item a.call-number { margin-left: 50px; align-self: flex-start; }
-  .home-contacts .not-item { padding: 18px 20px; }
+  .contacts .not-item { padding: 18px 20px; }
 }
 
 .not-list {
@@ -993,6 +1039,8 @@ body:has(.home-hero) .backdrop { opacity: 0; }
   .steps { padding: 36px 24px; }
   .steps ol { grid-template-columns: 1fr; }
   .path { min-height: 0; padding: 28px 24px; }
+  .path-help { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .path.path-help .path-cta { padding-top: 6px; }
   .field { height: 68px; padding: 0 18px; }
   .field input { font-size: 28px; }
   .q-actions .btn-primary { flex: 1; }
