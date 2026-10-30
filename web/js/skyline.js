@@ -98,7 +98,7 @@ const cloud = (x, y, s) =>
 function stars() {
   const rnd = random(5);
   let out = "";
-  for (let i = 0; i < 140; i++) {
+  for (let i = 0; i < 80; i++) {
     const x = r1(rnd() * W);
     const y = r1(TOP + 20 + rnd() * (200 - TOP));
     const r = r1(0.6 + rnd() * 1.1);
@@ -187,3 +187,20 @@ function draw() {
 }
 
 export const SKYLINE = draw();
+
+// The night sky goes on beyond the drawing: stars across the whole header, placed in percentages so they
+// keep their shape at any width. Shown in dark mode only.
+function starfield() {
+  const rnd = random(23);
+  let out = "";
+  for (let i = 0; i < 55; i++) {
+    const x = r1(rnd() * 100);
+    const y = r1(rnd() ** 1.4 * 100); // denser towards the top
+    const r = r1(0.5 + rnd() * 0.9);
+    const twinkle = i % 3 === 0 ? ` class="sk-twinkle" style="animation-delay:${r1(-rnd() * 6)}s"` : "";
+    out += `<circle cx="${x}%" cy="${y}%" r="${r}"${twinkle}/>`;
+  }
+  return `<svg class="sk-star" width="100%" height="100%" aria-hidden="true" focusable="false">${out}</svg>`;
+}
+
+export const STARFIELD = starfield();

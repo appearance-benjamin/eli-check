@@ -3,7 +3,7 @@ import { t, L, getLang, setLang, money, number } from "./i18n.js";
 import { SCHEMES, STATIC_TIPS, HELP, CALL, SAVE, CAUSE, CONDITION_TEXT, conditionPrefix } from "./benefits.js";
 import { calculate } from "./api.js";
 import { icon, chevron, check, external } from "./icons.js";
-import { SKYLINE } from "./skyline.js";
+import { SKYLINE, STARFIELD } from "./skyline.js";
 
 const app = document.getElementById("app");
 const progress = document.querySelector(".progress");
@@ -166,6 +166,7 @@ function renderHome() {
   setProgress(null);
   mount(`
     <div class="home-hero">
+      <div class="starfield">${STARFIELD}</div>
       <section class="hero">
         <p class="eyebrow">${t("heroMeta")}</p>
         <h1>${t("heroTitleA")}<br><span class="bloom-text">${t("heroTitleB")}</span></h1>
@@ -805,5 +806,7 @@ document.addEventListener("keydown", (e) => {
 
 window.addEventListener("hashchange", route);
 
+// The header's sky carries on faintly behind the questions and results: a soft glow by day, stars at night.
+document.body.insertAdjacentHTML("afterbegin", `<div class="backdrop" aria-hidden="true">${STARFIELD}</div>`);
 renderChrome();
 route();

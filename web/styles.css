@@ -239,7 +239,7 @@ button { font: inherit; color: inherit; }
   font-size: clamp(44px, 8vw, 84px);
   font-weight: 700;
   letter-spacing: -0.035em;
-  line-height: 0.98;
+  line-height: 1.08;
 }
 .bloom-text {
   background: var(--bloom);
@@ -892,6 +892,42 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
   .hero h1 { font-size: clamp(30px, 9.3vw, 36px); }
   .hero .lead { font-size: clamp(15px, 4.4vw, 17px); margin-top: 14px; }
   .hero-actions { margin-top: 22px; }
+/* At night the stars continue across the whole header, behind the text and around the drawing. */
+.home-hero { position: relative; isolation: isolate; }
+.starfield { display: none; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.starfield svg { display: block; }
+:root[data-theme="dark"] .starfield {
+  display: block;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+
+/* Behind the questions and results, a hint of the header's sky: a lavender and sunrise glow by day,
+   stars at night. The home page has the full scene instead. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.6s var(--ease);
+  background:
+    radial-gradient(70% 55% at 0% 0%, rgba(169, 154, 216, 0.24), transparent 70%),
+    radial-gradient(60% 50% at 100% 100%, rgba(255, 180, 138, 0.2), transparent 70%);
+}
+.backdrop svg { display: none; }
+:root[data-theme="dark"] .backdrop {
+  background:
+    radial-gradient(90% 60% at 50% 0%, rgba(43, 32, 82, 0.55), transparent 75%),
+    radial-gradient(60% 45% at 100% 100%, rgba(23, 26, 68, 0.6), transparent 70%);
+}
+/* Fewer stars behind the questions in the middle, so they never sit next to the text. */
+:root[data-theme="dark"] .backdrop svg {
+  display: block;
+  -webkit-mask-image: linear-gradient(to right, #000 15%, rgba(0, 0, 0, 0.15) 38%, rgba(0, 0, 0, 0.15) 62%, #000 85%);
+  mask-image: linear-gradient(to right, #000 15%, rgba(0, 0, 0, 0.15) 38%, rgba(0, 0, 0, 0.15) 62%, #000 85%);
+}
+body:has(.home-hero) .backdrop { opacity: 0; }
+
   .hero .btn-large { min-height: 50px; padding: 13px 28px; font-size: 17px; }
   .scene {
     position: absolute;
@@ -920,7 +956,9 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   html { scroll-behavior: auto; }
-  .scene * { animation: none !important; }
+  .scene *, .starfield *, .backdrop * { animation: none !important; }
+  /* The questions fill the width on phones: softer stars behind them. */
+  .backdrop svg { opacity: 0.45; }
 }
 
 /* ---------- Responsive ---------- */
