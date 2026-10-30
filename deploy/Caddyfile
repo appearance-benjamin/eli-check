@@ -1,0 +1,9 @@
+# No access log on purpose: we don't keep visitors' IP addresses.
+eli-check.nl {
+	encode zstd gzip
+	reverse_proxy app:8000
+}
+
+www.eli-check.nl {
+	redir https://eli-check.nl{uri} permanent
+}

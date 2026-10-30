@@ -1,46 +1,58 @@
 # Putting Eli Check online at eli-check.nl
 
-Eli Check is one small Python web service (OpenFisca rules + the questionnaire), packaged as a Docker image.
-The recommended host is **Render** in Frankfurt (EU data stays in the EU, free HTTPS, deploys on every push).
-Any other Docker host works too — see the end.
+Eli Check runs on our own Linux server with Docker: the app container (OpenFisca rules + the questionnaire)
+behind [Caddy](https://caddyserver.com), which serves `eli-check.nl` and gets HTTPS certificates automatically.
+Everything needed is in [`deploy/`](deploy/).
 
-## 1. Put the code on GitHub
+## 1. DNS
+
+At the registrar of eli-check.nl, remove the parking records and add:
+
+| Type | Name | Value |
+|---|---|---|
+| A | `@` | the server's public IPv4 address |
+| CNAME | `www` | `eli-check.nl` |
+
+Caddy can only get certificates once these resolve, so do this first. Check with
+`nslookup eli-check.nl` — it should return the server's address.
+
+## 2. First install on the server
+
+The server needs Docker with the compose plugin, and ports 80 and 443 open to the internet.
 
 ```bash
-gh repo create eli-check --public --source . --push
+git clone https://github.com/appearance-benjamin/eli-check.git ~/eli-check
+cd ~/eli-check/deploy
+chmod +x update.sh
+./update.sh
 ```
 
-Public is recommended: the code is licensed AGPL-3.0 (like OpenFisca itself), which means people who use the
-website must be able to get its source code. A public repository plus a "Source code" link in the footer covers that.
+`update.sh` pulls the latest code, builds the app image, starts the app and Caddy, and removes the old image.
+Open https://eli-check.nl — the first visit can take a few seconds while Caddy requests the certificate.
 
-## 2. Create the service on Render
+## 3. Updating
 
-1. Sign up at [render.com](https://render.com) with your GitHub account.
-2. **New → Blueprint**, pick the `eli-check` repository. Render reads `render.yaml` and creates the
-   `eli-check` web service (Docker, Frankfurt, free plan).
-3. Wait for the first deploy, then open the `https://eli-check.onrender.com` address Render shows you.
+Push to `main`, wait for the GitHub Actions tests to pass (`.github/workflows/test.yml` runs the rules tests
+and builds and smoke-tests the Docker image), then on the server:
 
-Free plan: the service sleeps after 15 minutes without visitors, and the first visit after that takes
-about a minute. For a public launch, switch the service to the **Starter** plan (about $7/month) so it is always on.
-
-## 3. Connect eli-check.nl
-
-1. In Render: service → **Settings → Custom Domains**. `eli-check.nl` and `www.eli-check.nl` are already listed
-   from `render.yaml`; Render shows the exact DNS records to add.
-2. At the company where you registered eli-check.nl, open the DNS settings and add those records
-   (usually an **A record** for `eli-check.nl` and a **CNAME** for `www`). Remove any default "parking" records.
-3. Back in Render, click **Verify**. HTTPS certificates are issued automatically; DNS can take up to a few hours.
-
-## 4. Updating
-
-Every push to the `main` branch redeploys automatically. GitHub Actions runs the rules tests on every push
-(`.github/workflows/test.yml`); check they're green before relying on a deploy.
+```bash
+~/eli-check/deploy/update.sh
+```
 
 Yearly upkeep (new amounts every 1 January, some on 1 July and 1 August/September) is described in the README.
 
-## Other hosts
+## Useful commands (in `~/eli-check/deploy`)
 
-The `Dockerfile` runs anywhere that runs containers (Fly.io in Amsterdam, Railway, Scaleway, a VPS):
+```bash
+docker compose ps                 # is it running?
+docker compose logs -f caddy      # certificate problems
+docker compose logs -f app        # app errors
+docker compose down               # stop (certificates are kept in the caddy_data volume)
+```
+
+## Running it without the proxy
+
+The `Dockerfile` runs anywhere that runs containers:
 
 ```bash
 docker build -t eli-check .
@@ -52,6 +64,7 @@ each needs about 150 MB of memory).
 
 ## Privacy checklist
 
-- The app stores nothing and logs no requests (no access log in the container).
-- Your host may still keep its own request logs — Render keeps them for a limited time; mention this in a
-  short privacy statement on the site if you add one.
+- The app stores nothing, and neither the app nor Caddy writes an access log, so visitors' IP addresses
+  are not kept.
+- The server's own firewall or provider may log traffic; mention this in a short privacy statement on the
+  site if you add one.

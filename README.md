@@ -69,7 +69,7 @@ python -m venv .venv
 (`POST /api/calculate`, `GET /api/variables`, `GET /api/variable/<name>`, `GET /api/spec`). Set `PORT` to change
 the port. Restart it after changing rules: OpenFisca loads them once at start-up.
 
-To put it online (Docker image, Render config, connecting eli-check.nl) see [DEPLOY.md](DEPLOY.md).
+To put it online on a server with Docker and Caddy (files in `deploy/`) see [DEPLOY.md](DEPLOY.md).
 
 ## Example API call
 
