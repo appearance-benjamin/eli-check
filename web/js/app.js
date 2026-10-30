@@ -201,6 +201,11 @@ function renderHome() {
         <div class="feature">${icon("arrow")}<h3>${t("feat3Title")}</h3><p>${t("feat3Text")}</p></div>
       </section>
 
+      <div class="home-contacts">
+        ${callHtml(CALL)}
+        ${helpHtml(HELP)}
+      </div>
+
       <section class="steps" id="how">
         <h2>${t("stepsTitle")}</h2>
         <ol>
@@ -210,10 +215,11 @@ function renderHome() {
         </ol>
       </section>
 
-      <div class="home-contacts">
-        ${callHtml(CALL)}
-        ${helpHtml(HELP)}
-      </div>
+      <section class="closing">
+        <h2>${t("closingTitleA")}<span class="bloom-text">${t("closingTitleB")}</span></h2>
+        <p>${t("closingText")}</p>
+        <button type="button" class="btn btn-primary btn-large" data-action="start">${t("getStarted")}</button>
+      </section>
     </div>`);
 }
 
