@@ -838,10 +838,14 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 :root[data-theme="dark"] .sk-lantern,
 .sk-lamplight { animation: sk-glow 5s ease-in-out infinite; }
 @keyframes sk-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-/* By day a cyclist crosses the bridge and the sun's glow slowly swells and fades. */
+/* By day the sun's glow slowly swells and fades, and a cyclist crosses the bridge as a small
+   surprise: first after 30 seconds on the page, then once a minute. */
 :root[data-theme="dark"] .sk-rider { display: none; }
-.sk-ride { animation: sk-ride 30s linear infinite; }
-@keyframes sk-ride { from { transform: translateX(360px); } to { transform: translateX(1260px); } }
+.sk-ride { animation: sk-ride 60s linear infinite; }
+@keyframes sk-ride {
+  0%, 50% { transform: translateX(360px); }
+  100% { transform: translateX(1260px); }
+}
 .sk-sunglow { transform-box: fill-box; transform-origin: center; animation: sk-sunglow 8s ease-in-out infinite; }
 @keyframes sk-sunglow { 0%, 100% { opacity: 0.6; transform: scale(0.92); } 50% { opacity: 1; transform: scale(1.08); } }
 @keyframes sk-ripple {
