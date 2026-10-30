@@ -3,7 +3,7 @@
 // Only shapes live here; the colours are the --sk-* tokens in styles.css, so dark mode turns it into night.
 
 const W = 1600;
-const H = 400;
+const H = 440;
 const BASE = 320; // buildings stop here, behind the bridge
 const WATER = 352; // water line: the bridge piers stand on it
 const DECK = 290; // top of the bridge parapet
@@ -104,9 +104,9 @@ function stars() {
 function shimmer() {
   const rnd = random(19);
   let out = "";
-  for (let i = 0; i < 28; i++) {
+  for (let i = 0; i < 64; i++) {
     const x = r1(rnd() * W);
-    const y = r1(WATER + 6 + rnd() * 36);
+    const y = r1(WATER + 6 + rnd() * 52);
     const len = r1(12 + rnd() * 40);
     out += `<path d="M${x} ${y}h${len}" style="animation-delay:${r1(-rnd() * 6)}s"/>`;
   }
@@ -168,7 +168,7 @@ function draw() {
   <path class="sk-lamp" d="${posts}"/>
   <path class="sk-lantern" d="${lanterns}"/>
   <g class="sk-night">${LAMPS.map((x) => `<circle cx="${x}" cy="254" r="26" fill="url(#sk-halo)"/>`).join("")}</g>
-  <rect y="360" width="${W}" height="${H - 360}" fill="url(#sk-fade)"/>
+  <rect y="400" width="${W}" height="${H - 400}" fill="url(#sk-fade)"/>
 </svg>`;
 }
 
