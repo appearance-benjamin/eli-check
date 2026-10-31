@@ -697,7 +697,6 @@ async function renderResults() {
       <p class="disclaimer">${t("disclaimer")}</p>
       <div class="results-actions">
         <button type="button" class="btn btn-secondary" data-action="review">${t("changeAnswers")}</button>
-        <button type="button" class="btn btn-secondary" data-action="print">${t("print")}</button>
         <button type="button" class="btn btn-secondary" data-action="restart">${t("startOver")}</button>
       </div>
     </div>`);
@@ -791,8 +790,6 @@ app.addEventListener("click", (e) => {
       return go("#/results");
     case "review":
       return go("#/review");
-    case "print":
-      return window.print();
     case "restart":
       answers = {};
       saveAnswers();
