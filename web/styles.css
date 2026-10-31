@@ -898,9 +898,12 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
 
 /* Slow, calm motion: drifting clouds, twinkling windows, ripples sliding along the water. */
 .sk-drift { animation: sk-drift 40s ease-in-out infinite alternate; }
+/* The sun slowly rises and settles a little above the rooftops. */
+.sk-sunmove { animation: sk-sunmove 12s ease-in-out infinite alternate; }
+@keyframes sk-sunmove { from { transform: translateY(10px); } to { transform: translateY(-16px); } }
 .sk-twinkle { animation: sk-twinkle 6s ease-in-out infinite; }
 .sk-shine path { animation: sk-ripple 6s ease-in-out infinite; }
-@keyframes sk-drift { from { transform: translateX(-30px); } to { transform: translateX(30px); } }
+@keyframes sk-drift { from { transform: translateX(calc(-1 * var(--d, 30px))); } to { transform: translateX(var(--d, 30px)); } }
 @keyframes sk-twinkle { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.2; } }
 /* At night the windows and the bridge lamps slowly brighten and dim. */
 :root[data-theme="dark"] .sk-win path,
@@ -916,7 +919,7 @@ a.help-item strong .ext { color: var(--accent); margin-left: 2px; }
   100% { transform: translateX(1260px); }
 }
 .sk-sunglow { transform-box: fill-box; transform-origin: center; animation: sk-sunglow 8s ease-in-out infinite; }
-@keyframes sk-sunglow { 0%, 100% { opacity: 0.6; transform: scale(0.92); } 50% { opacity: 1; transform: scale(1.08); } }
+@keyframes sk-sunglow { 0%, 100% { opacity: 0.45; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.15); } }
 @keyframes sk-ripple {
   0%, 100% { opacity: 0.15; transform: translateX(-18px); }
   50% { opacity: 1; transform: translateX(18px); }

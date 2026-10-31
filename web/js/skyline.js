@@ -157,8 +157,12 @@ function draw() {
   </defs>
   <rect y="${TOP}" width="${W}" height="${WATER - TOP}" fill="url(#sk-sky)"/>
   <g class="sk-day">
-    <circle class="sk-sunglow" cx="970" cy="214" r="120" fill="url(#sk-sunhalo)"/><circle class="sk-sun" cx="970" cy="214" r="46"/>
-    <g class="sk-cloud sk-drift">${cloud(250, 118, 1)}${cloud(620, 128, 0.8)}${cloud(1450, 104, 1.1)}</g>
+    <g class="sk-sunmove"><circle class="sk-sunglow" cx="970" cy="214" r="120" fill="url(#sk-sunhalo)"/><circle class="sk-sun" cx="970" cy="214" r="46"/></g>
+    <g class="sk-cloud">
+      <g class="sk-drift" style="--d:90px;animation-duration:28s">${cloud(520, 124, 0.85)}</g>
+      <g class="sk-drift" style="--d:110px;animation-duration:36s;animation-delay:-14s">${cloud(1090, 86, 1)}</g>
+      <g class="sk-drift" style="--d:70px;animation-duration:44s;animation-delay:-8s">${cloud(250, 118, 1)}${cloud(1450, 104, 1.1)}</g>
+    </g>
   </g>
   <g class="sk-night">
     <circle cx="970" cy="118" r="70" fill="url(#sk-moonhalo)"/><circle class="sk-moon" cx="970" cy="118" r="17"/>
