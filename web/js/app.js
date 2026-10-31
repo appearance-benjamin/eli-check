@@ -675,16 +675,13 @@ async function renderResults() {
 
   const result = cachedResult.result;
   const { likely, worth, notNow, total } = buildGroups(result);
-  const monthName = new Intl.DateTimeFormat(getLang() === "nl" ? "nl-NL" : "en-GB", { month: "long", year: "numeric" }).format(new Date());
 
   const summary =
     total > 0
-      ? `<p class="eyebrow">${t("resultsEyebrow", { month: monthName })}</p>
-         <p class="sub" style="margin:0 0 10px">${t("couldReceive")}</p>
+      ? `<p class="sub" style="margin:0 0 10px">${t("couldReceive")}</p>
          <p class="big"><span id="total">${money(total)}</span><small>${t("perMonth")}</small></p>
          <p class="sub">${t("aYear", { amount: money(total * 12) })}</p>`
-      : `<p class="eyebrow">${t("resultsEyebrow", { month: monthName })}</p>
-         <h1 style="font-size:clamp(36px,6vw,56px)">${t("nothingTitle")}</h1>
+      : `<h1 style="font-size:clamp(36px,6vw,56px)">${t("nothingTitle")}</h1>
          <p class="sub">${t("nothingText")}</p>`;
 
   mount(`
@@ -692,6 +689,7 @@ async function renderResults() {
       <section class="summary">${summary}<p class="hint">${t("summaryHint")}</p></section>
       ${groupHtml(t("likely"), likely, "good")}
       ${groupHtml(t("check"), worth, "check")}
+      ${giveHtml(total)}
       ${notNowHtml(notNow)}
       ${helpHtml()}
       ${callHtml()}
@@ -702,7 +700,6 @@ async function renderResults() {
         <button type="button" class="btn btn-secondary" data-action="print">${t("print")}</button>
         <button type="button" class="btn btn-secondary" data-action="restart">${t("startOver")}</button>
       </div>
-      ${giveHtml(total)}
     </div>`);
 
   const totalEl = document.getElementById("total");
