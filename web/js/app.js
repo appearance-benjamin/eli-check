@@ -217,11 +217,6 @@ function renderHome() {
         </ol>
       </section>
 
-      <section class="closing">
-        <h2>${t("closingTitleA")}<span class="bloom-text">${t("closingTitleB")}</span></h2>
-        <p>${t("closingText")}</p>
-      </section>
-
       <section class="features">
         <div class="feature">${icon("lock")}<h3>${t("feat1Title")}</h3><p>${t("feat1Text")}</p></div>
         <div class="feature">${icon("code")}<h3>${t("feat2Title")}</h3><p>${t("feat2Text")}</p></div>
