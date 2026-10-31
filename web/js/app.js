@@ -631,7 +631,7 @@ function giveHtml(total) {
       <p class="give-title">${t("giveTitle", { amount })}</p>
       ${gain}
       <p>${t("giveText", { fund })}</p>
-      <a href="${L(CAUSE.link)}" target="_blank" rel="noopener noreferrer">${t("giveCta", { fund })} ${external}</a>
+      <a class="btn btn-primary" href="${L(CAUSE.link)}" target="_blank" rel="noopener noreferrer">${t("giveCta", { amount })} ${external}</a>
     </div>
   </aside>`;
 }
@@ -687,9 +687,9 @@ async function renderResults() {
   mount(`
     <div class="results">
       <section class="summary">${summary}<p class="hint">${t("summaryHint")}</p></section>
+      ${giveHtml(total)}
       ${groupHtml(t("likely"), likely, "good")}
       ${groupHtml(t("check"), worth, "check")}
-      ${giveHtml(total)}
       ${notNowHtml(notNow)}
       ${helpHtml()}
       ${callHtml()}
