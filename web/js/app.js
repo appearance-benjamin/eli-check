@@ -208,16 +208,7 @@ function renderHome() {
         </a>
       </section>
 
-      <section class="steps" id="how">
-        <h2>${t("stepsTitle")}</h2>
-        <ol>
-          <li><strong>${t("step1Title")}</strong><span>${t("step1Text")}</span></li>
-          <li><strong>${t("step2Title")}</strong><span>${t("step2Text")}</span></li>
-          <li><strong>${t("step3Title")}</strong><span>${t("step3Text")}</span></li>
-        </ol>
-      </section>
-
-      <section class="features">
+      <section class="features" id="how">
         <div class="feature">${icon("lock")}<h3>${t("feat1Title")}</h3><p>${t("feat1Text")}</p></div>
         <div class="feature">${icon("code")}<h3>${t("feat2Title")}</h3><p>${t("feat2Text")}</p></div>
         <div class="feature">${icon("arrow")}<h3>${t("feat3Title")}</h3><p>${t("feat3Text")}</p></div>

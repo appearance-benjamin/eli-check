@@ -359,32 +359,6 @@ button { font: inherit; color: inherit; }
 .feature h3 { font-size: 19px; letter-spacing: -0.015em; margin-bottom: 6px; }
 .feature p { color: var(--text-2); font-size: 16px; }
 
-.steps {
-  margin: 64px 0 72px;
-  padding: 48px 40px;
-  border-radius: var(--radius-lg);
-  background: var(--surface-2);
-}
-.steps h2 { font-size: clamp(28px, 4vw, 40px); text-align: center; margin-bottom: 36px; }
-.steps ol {
-  list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px;
-  counter-reset: step;
-}
-.steps li { counter-increment: step; }
-.steps li::before {
-  content: counter(step);
-  display: grid; place-items: center;
-  width: 32px; height: 32px; border-radius: 50%;
-  background: var(--text); color: var(--bg);
-  font-weight: 600; font-size: 15px;
-  margin-bottom: 14px;
-  transition: transform 0.3s var(--ease);
-}
-.steps li:hover::before { transform: scale(1.12); }
-.steps li strong { display: block; font-size: 19px; margin-bottom: 4px; letter-spacing: -0.015em; }
-.steps li span { color: var(--text-2); font-size: 16px; }
-
 /* The Help page: who to call, free help and ways to save, for everyone. */
 .help-page { max-width: 980px; margin: 0 auto; padding: 18px 22px 88px; }
 .page-head { text-align: center; padding: clamp(40px, 8vh, 80px) 0 40px; }
@@ -1032,9 +1006,6 @@ body:has(.home-hero) .backdrop { opacity: 0; }
 @media (max-width: 760px) {
   .paths, .cards { grid-template-columns: 1fr; }
   .features { grid-template-columns: 1fr; gap: 26px; padding: 40px 0 64px; }
-  .steps { margin-top: 48px; }
-  .steps { padding: 36px 24px; }
-  .steps ol { grid-template-columns: 1fr; }
   .path { min-height: 0; padding: 28px 24px; }
   .path-help { flex-direction: column; align-items: flex-start; gap: 10px; }
   .path.path-help .path-cta { padding-top: 6px; }
