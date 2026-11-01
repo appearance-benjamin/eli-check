@@ -74,7 +74,6 @@ const UI = {
     tryAgain: "Try again",
     sourceCode: "Source code",
     footer: "An independent, non-commercial tool built on OpenFisca, not affiliated with the Dutch government. Results are estimates — always verify with the official agency.",
-    sections: { about: "About you", study: "Your studies", home: "Your home", household: "Household", money: "Money" },
   },
   nl: {
     title: "Zie waar je recht op hebt",
@@ -149,7 +148,6 @@ const UI = {
     tryAgain: "Probeer opnieuw",
     sourceCode: "Broncode",
     footer: "Een onafhankelijke, niet-commerciële tool gebouwd op OpenFisca, niet verbonden aan de Nederlandse overheid. Uitkomsten zijn schattingen — controleer altijd bij de officiële instantie.",
-    sections: { about: "Over jou", study: "Je studie", home: "Je woning", household: "Huishouden", money: "Geld" },
   },
 };
 

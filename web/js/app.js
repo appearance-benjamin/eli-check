@@ -256,7 +256,6 @@ function renderQuestion(id) {
         <button type="button" class="btn-link" data-action="back">${chevron}${t("back")}</button>
         <span class="step-count">${t("stepOf", { n: idx + 1, total: list.length })}</span>
       </div>
-      <p class="q-section">${t(`sections.${q.section}`)}</p>
       <h1 class="q-title" id="q-title" tabindex="-1">${L(q.title)}</h1>
       ${q.help ? `<p class="q-help">${L(q.help)}</p>` : ""}
       <div class="q-body">${body}</div>
