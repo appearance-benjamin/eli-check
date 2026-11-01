@@ -93,9 +93,34 @@ function back(fromId) {
 
 // ---------- chrome ----------
 
-function mount(html, { dir = "fwd" } = {}) {
-  app.innerHTML = `<div class="screen ${dir === "back" ? "back" : ""}">${html}</div>`;
+function mount(html, { dir = "fwd", slide = false } = {}) {
+  app.querySelectorAll(".is-leaving").forEach((el) => el.remove());
+  const old = slide && !reducedMotion ? app.querySelector(".screen") : null;
+  if (!old) {
+    app.innerHTML = `<div class="screen ${dir === "back" ? "back" : ""}">${html}</div>`;
+    window.scrollTo({ top: 0, behavior: "instant" });
+    return;
+  }
+  // From question to question: the old one slides out while the new one springs in from the other
+  // side, like turning a card. Back and the step count stay put.
+  const next = document.createElement("div");
+  next.className = "screen is-sliding";
+  next.innerHTML = html;
+  old.classList.add("is-leaving");
+  old.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+  app.prepend(next);
   window.scrollTo({ top: 0, behavior: "instant" });
+
+  const sign = dir === "back" ? -1 : 1;
+  const d = Math.min(app.clientWidth * 0.5, 320);
+  const out = { duration: 320, easing: "cubic-bezier(0.4, 0, 1, 1)", fill: "forwards" };
+  old.animate({ transform: ["none", `translateX(${-sign * d}px)`] }, out);
+  old.animate({ opacity: [1, 0] }, { ...out, duration: 200 });
+  setTimeout(() => old.remove(), out.duration);
+  next.querySelectorAll(".flow > :not(.flow-nav)").forEach((el) => {
+    el.animate({ transform: [`translateX(${sign * d}px)`, "none"] }, { duration: 600, easing: "cubic-bezier(0.2, 1.15, 0.35, 1)", fill: "backwards" });
+    el.animate({ opacity: [0, 1] }, { duration: 220, easing: "ease-out", fill: "backwards" });
+  });
 }
 
 function setProgress(fraction) {
@@ -265,7 +290,7 @@ function renderQuestion(id) {
         ${q.allowUnknown ? `<button type="button" class="btn-link" data-action="unknown">${t("notSure")}</button>` : ""}
       </div>
     </section>`,
-    { dir },
+    { dir, slide: !!app.querySelector(".screen .flow") },
   );
 
   const input = app.querySelector("#q-input");
