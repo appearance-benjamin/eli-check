@@ -973,7 +973,6 @@ body:has(.home-hero) .backdrop { opacity: 0; }
     justify-content: center;
     padding: 12px 22px;
   }
-  .hero .eyebrow { font-size: 14px; margin-bottom: 10px; }
   .hero h1 { font-size: clamp(30px, 9.3vw, 36px); }
   .hero .lead { font-size: clamp(15px, 4.4vw, 17px); margin-top: 14px; }
   .hero-actions { margin-top: 22px; }

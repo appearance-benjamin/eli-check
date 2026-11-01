@@ -173,7 +173,6 @@ function renderHome() {
     <div class="home-hero">
       <div class="starfield">${STARFIELD}</div>
       <section class="hero">
-        <p class="eyebrow">${t("heroMeta")}</p>
         <h1>${t("heroTitleA")}<br><span class="bloom-text">${t("heroTitleB")}</span></h1>
         <p class="lead">${t("heroLead")}</p>
         <div class="hero-actions">
